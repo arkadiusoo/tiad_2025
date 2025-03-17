@@ -14,36 +14,43 @@ class MainWindow(QMainWindow):
 
         self.layout = QVBoxLayout()
 
-        # Etykieta wyboru pliku
-        self.label = QLabel("Wybierz plik XLSX do konwersji:")
+        # File detection label
+        self.label = QLabel("Choose XLSX file to convert:")
         self.layout.addWidget(self.label)
 
-        # Przycisk wyboru pliku
-        self.button_select = QPushButton("Wybierz plik")
+        # File selection button
+        self.button_select = QPushButton("Select file")
         self.button_select.clicked.connect(self.select_file)
         self.layout.addWidget(self.button_select)
 
-
-        if self.path
-        # ComboBox do wyboru arkusza
+        # ComboBox for sheet selection (hide by default)
         self.sheet_selector = QComboBox()
         self.sheet_selector.currentTextChanged.connect(self.load_selected_sheet)
+        self.sheet_selector.setVisible(False)
         self.layout.addWidget(self.sheet_selector)
 
-        # Tabela do podglądu pliku
+        # Button for hiding/showing preview
+        self.toggle_preview_button = QPushButton("Pokaż podgląd")
+        self.toggle_preview_button.clicked.connect(self.toggle_preview)
+        self.toggle_preview_button.setVisible(False)
+        self.layout.addWidget(self.toggle_preview_button)
+
+        # Table for preview (hide by default)
         self.table = QTableWidget()
+        self.table.setVisible(False)
         self.layout.addWidget(self.table)
 
-        # Przycisk konwersji
+        # Conver button
         self.button_convert = QPushButton("Konwertuj do DOCX")
         self.button_convert.clicked.connect(self.convert_file)
+        self.button_convert.setVisible(False)
         self.layout.addWidget(self.button_convert)
 
-        # Status operacji
+        # Status label
         self.status_label = QLabel("")
         self.layout.addWidget(self.status_label)
 
-        # Kontener na layout
+        # Layout container
         container = QWidget()
         container.setLayout(self.layout)
         self.setCentralWidget(container)
@@ -52,17 +59,22 @@ class MainWindow(QMainWindow):
         self.sheets = {}
 
     def select_file(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, "Wybierz plik XLSX", "", "Excel Files (*.xlsx)")
+        file_path, _ = QFileDialog.getOpenFileName(self, "Choose XLSX file", "", "Excel Files (*.xlsx)")
         if file_path:
             self.xlsx_file = file_path
-            self.label.setText(f"Wybrano: {file_path}")
+            self.label.setText(f"Selected: {file_path}")
 
-            # Wczytanie arkuszy
+            # loading sheets
             self.sheets = pd.read_excel(self.xlsx_file, sheet_name=None)
             self.sheet_selector.clear()
             self.sheet_selector.addItems(self.sheets.keys())
 
-            # Domyślnie wczytaj pierwszy arkusz
+            # Visibility toggling
+            self.sheet_selector.setVisible(True)
+            self.button_convert.setVisible(True)
+            self.toggle_preview_button.setVisible(True)
+
+            # First sheet by default
             first_sheet = self.sheet_selector.currentText()
             if first_sheet:
                 self.load_sheet(first_sheet)
@@ -82,17 +94,24 @@ class MainWindow(QMainWindow):
             for col_idx, value in enumerate(row):
                 self.table.setItem(row_idx, col_idx, QTableWidgetItem(str(value)))
 
+    def toggle_preview(self):
+        if self.table.isVisible():
+            self.table.setVisible(False)
+            self.toggle_preview_button.setText("Show preview")
+        else:
+            self.table.setVisible(True)
+            self.toggle_preview_button.setText("Hide preview")
+
     def convert_file(self):
         if not self.xlsx_file:
-            self.status_label.setText("Najpierw wybierz plik XLSX!")
+            self.status_label.setText("Choose XLSX file first!")
             return
 
-        save_path, _ = QFileDialog.getSaveFileName(self, "Zapisz jako", "", "Word Files (*.docx)")
+        save_path, _ = QFileDialog.getSaveFileName(self, "Save as", "", "Word Files (*.docx)")
         if save_path:
             selected_sheet = self.sheet_selector.currentText()
             df = self.sheets[selected_sheet]
-            df.to_excel("temp.xlsx", index=False)  # Tymczasowy plik z wybranym arkuszem
+            df.to_excel("temp.xlsx", index=False)  # temp file with selected sheet
 
             convert_xlsx_to_docx("temp.xlsx", save_path)
-            self.status_label.setText("Konwersja zakończona sukcesem!")
-
+            self.status_label.setText("Conversion successful!")
