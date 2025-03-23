@@ -144,6 +144,7 @@ class MainWindow(QMainWindow):
         file_path, _ = QFileDialog.getOpenFileName(self, "Choose XLSX file", "", "Excel Files (*.xlsx)")
         if file_path:
             self.xlsx_file = file_path
+            self.original_file_name = file_path.split("/")[-1]
             self.label.setText(f"Selected: {file_path}")
 
             # loading sheets
@@ -208,7 +209,7 @@ class MainWindow(QMainWindow):
             df = self.sheets[selected_sheet]
             df.to_excel("temp.xlsx", index=False)  # temp file with selected sheet
 
-            convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(), self.headers_bold.isChecked(), font_size, font, form)
+            convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(), self.headers_bold.isChecked(), font_size, font, form, self.original_file_name)
             self.status_label.setText("Conversion successful!")
 
     @visible_if_checked('headers', 'headers_bold')

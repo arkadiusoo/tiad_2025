@@ -4,15 +4,14 @@ from docx.shared import Pt
 import os
 import subprocess
 
-def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, font_size, font, form):
+def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, font_size, font, form, original_name):
     font_size = (int(font_size))
-    fileExcel = os.path.basename(xlsx_path)
-    fileExcel = os.path.splitext(fileExcel)[0]
     # file xlsx read
     df = pd.read_excel(xlsx_path)
     # dockx file creating
     doc = Document()
-    heading = doc.add_heading(fileExcel, level=1)
+    header = "Data from file {}".format(original_name)
+    heading = doc.add_heading(header, level=1)
     for run in heading.runs:
         run.font.name = font
         run.font.size = Pt(font_size)
