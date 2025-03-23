@@ -8,9 +8,9 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
     font_size = (int(font_size))
     fileExcel = os.path.basename(xlsx_path)
     fileExcel = os.path.splitext(fileExcel)[0]
-    # Wczytanie pliku XLSX
+    # file xlsx read
     df = pd.read_excel(xlsx_path)
-    # Tworzenie dokumentu Word
+    # dockx file creating
     doc = Document()
     heading = doc.add_heading(fileExcel, level=1)
     for run in heading.runs:
@@ -45,10 +45,10 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
 
                 doc.add_paragraph("")
         else:
-            # Dodanie tabeli do dokumentu
+            # adding table to document
             table = doc.add_table(rows=df.shape[0] + 1, cols=df.shape[1])
             table.style = 'Table Grid'
-            # Dodanie nagłówków
+            # adding headers
             if headers == True:
                 for j, column in enumerate(df.columns):
                     cell = table.cell(0, j)
@@ -57,7 +57,7 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
                     run.font.size = Pt(font_size)
                     if headers_bold:
                         run.bold = True
-            # Dodanie danych z Excela
+            # adding data from excel
             for i, row in df.iterrows():
                 for j, value in enumerate(row):
                     cell = table.cell(i + 1, j)
@@ -65,7 +65,7 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
                     run.font.name = font
                     run.font.size = Pt(font_size)
     elif form == 2:
-        # Dodanie danych z Excela
+        # adding data from excel
         header = ""
         if headers == True:
             for j, column in enumerate(df.columns):

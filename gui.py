@@ -6,6 +6,22 @@ from PyQt6.QtWidgets import (
 )
 from converter import convert_xlsx_to_docx
 
+def visible_if_checked(checkbox_attr_name, target_widget_attr_name):
+    def decorator(func):
+        def wrapper(self, *args, **kwargs):
+            checkbox = getattr(self, checkbox_attr_name)
+            target_widget = getattr(self, target_widget_attr_name)
+            target_widget.setVisible(checkbox.isChecked())
+
+            if not checkbox.isChecked():
+                target_widget.setChecked(False)
+
+            return func(self, *args, **kwargs)
+        return wrapper
+    return decorator
+
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -41,13 +57,13 @@ class MainWindow(QMainWindow):
         hbox3.addWidget(self.headers_bold)
         self.layout.addLayout(hbox3)
 
-        # Wybór czcionki
+        # font ComboBox
         self.font_combo = QComboBox()
         self.font_combo.addItems(["Arial", "Times New Roman", "Calibri", "Verdana"])
         self.font_combo.setCurrentText("Arial")
         self.font_combo.setVisible(False)
 
-        # Wybór rozmiaru czcionki
+        # font size ComboBox
         self.size_combo = QComboBox()
         self.size_combo.addItems(["10", "11", "12", "14", "16", "18", "20"])
         self.size_combo.setCurrentText("12")
@@ -55,7 +71,7 @@ class MainWindow(QMainWindow):
 
         hbox_font = QHBoxLayout()
         hbox_font.addWidget(self.font_combo)
-        hbox_font.addSpacing(20)  # odstęp
+        hbox_font.addSpacing(20)  # space
         hbox_font.addWidget(self.size_combo)
         self.layout.addLayout(hbox_font)
 
@@ -90,7 +106,7 @@ class MainWindow(QMainWindow):
         hbox1.addWidget(self.radio_list)
         hbox1.addWidget(self.radio_page)
 
-        # Grupa druga (DOCX lub PDF)
+        # second group (DOCX or PDF)
         self.radio_docx = QRadioButton("Konwertuj do DOCX")
         self.radio_pdf = QRadioButton("Konwertuj do PDF")
         self.radio_docx.setChecked(True)
@@ -103,10 +119,10 @@ class MainWindow(QMainWindow):
         hbox2.addWidget(self.radio_docx)
         hbox2.addWidget(self.radio_pdf)
 
-        # Dodanie elementów do głównego layoutu
+        # add element to layout
         self.layout.addLayout(hbox1)
         self.layout.addLayout(hbox2)
-        # Conver button
+        # convert button
         self.button_convert = QPushButton("Konwertuj")
         self.button_convert.clicked.connect(self.convert_file)
         self.button_convert.setVisible(False)
@@ -195,5 +211,7 @@ class MainWindow(QMainWindow):
             convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(), self.headers_bold.isChecked(), font_size, font, form)
             self.status_label.setText("Conversion successful!")
 
-    def toggle_headers_bold(self):
-        self.headers_bold.setVisible(True)
+    @visible_if_checked('headers', 'headers_bold')
+    def toggle_headers_bold(self, checked):
+        pass
+
