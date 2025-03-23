@@ -2,7 +2,7 @@ import sys
 import pandas as pd
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QFileDialog, QLabel,
-    QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QComboBox, QRadioButton, QButtonGroup, QHBoxLayout
+    QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QComboBox, QRadioButton, QButtonGroup, QHBoxLayout, QCheckBox
 )
 from converter import convert_xlsx_to_docx
 
@@ -29,6 +29,36 @@ class MainWindow(QMainWindow):
         self.sheet_selector.setVisible(False)
         self.layout.addWidget(self.sheet_selector)
 
+        self.headers = QCheckBox("Dodaj nagłowki")
+        self.headers.setVisible(False)
+        self.headers.toggled.connect(self.toggle_headers_bold)
+
+        self.headers_bold = QCheckBox("Nagłówki pogrubione")
+        self.headers_bold.setVisible(False)
+
+        hbox3 = QHBoxLayout()
+        hbox3.addWidget(self.headers)
+        hbox3.addWidget(self.headers_bold)
+        self.layout.addLayout(hbox3)
+
+        # Wybór czcionki
+        self.font_combo = QComboBox()
+        self.font_combo.addItems(["Arial", "Times New Roman", "Calibri", "Verdana"])
+        self.font_combo.setCurrentText("Arial")
+        self.font_combo.setVisible(False)
+
+        # Wybór rozmiaru czcionki
+        self.size_combo = QComboBox()
+        self.size_combo.addItems(["10", "11", "12", "14", "16", "18", "20"])
+        self.size_combo.setCurrentText("12")
+        self.size_combo.setVisible(False)
+
+        hbox_font = QHBoxLayout()
+        hbox_font.addWidget(self.font_combo)
+        hbox_font.addSpacing(20)  # odstęp
+        hbox_font.addWidget(self.size_combo)
+        self.layout.addLayout(hbox_font)
+
         # Button for hiding/showing preview
         self.toggle_preview_button = QPushButton("Pokaż podgląd")
         self.toggle_preview_button.clicked.connect(self.toggle_preview)
@@ -40,17 +70,25 @@ class MainWindow(QMainWindow):
         self.table.setVisible(False)
         self.layout.addWidget(self.table)
 
-        self.radio_table = QRadioButton("Konwertuj do tabeli")
-        self.radio_spaces = QRadioButton("Konwertuj ze spacjami")
+        self.type_label = QLabel("Konwertuj jako")
+        self.radio_table = QRadioButton("Tabela")
+        self.radio_spaces = QRadioButton("Ze spacjami")
+        self.radio_list = QRadioButton("Lista")
+        self.radio_page = QRadioButton("Lista ze stronami")
         self.radio_table.setChecked(True)
 
         self.group_format = QButtonGroup(self)
         self.group_format.addButton(self.radio_table)
         self.group_format.addButton(self.radio_spaces)
+        self.group_format.addButton(self.radio_list)
+        self.group_format.addButton(self.radio_page)
 
         hbox1 = QHBoxLayout()
+        hbox1.addWidget(self.type_label)
         hbox1.addWidget(self.radio_table)
         hbox1.addWidget(self.radio_spaces)
+        hbox1.addWidget(self.radio_list)
+        hbox1.addWidget(self.radio_page)
 
         # Grupa druga (DOCX lub PDF)
         self.radio_docx = QRadioButton("Konwertuj do DOCX")
@@ -101,6 +139,9 @@ class MainWindow(QMainWindow):
             self.sheet_selector.setVisible(True)
             self.button_convert.setVisible(True)
             self.toggle_preview_button.setVisible(True)
+            self.headers.setVisible(True)
+            self.font_combo.setVisible(True)
+            self.size_combo.setVisible(True)
 
             # First sheet by default
             first_sheet = self.sheet_selector.currentText()
@@ -136,10 +177,23 @@ class MainWindow(QMainWindow):
             return
 
         save_path, _ = QFileDialog.getSaveFileName(self, "Save as", "", "Word Files (*.docx)")
+        font_size = self.size_combo.currentText()
+        font = self.font_combo.currentText()
+        if self.radio_table.isChecked():
+            form = 1
+        elif self.radio_spaces.isChecked():
+            form = 2
+        elif self.radio_list.isChecked():
+            form = 3
+        else:
+            form = 4
         if save_path:
             selected_sheet = self.sheet_selector.currentText()
             df = self.sheets[selected_sheet]
             df.to_excel("temp.xlsx", index=False)  # temp file with selected sheet
 
-            convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_table.isChecked(), self.radio_pdf.isChecked())
+            convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(), self.headers_bold.isChecked(), font_size, font, form)
             self.status_label.setText("Conversion successful!")
+
+    def toggle_headers_bold(self):
+        self.headers_bold.setVisible(True)
