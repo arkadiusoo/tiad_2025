@@ -2,11 +2,13 @@ import sys
 import pandas as pd
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QFileDialog, QLabel,
-    QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QComboBox, QRadioButton, QButtonGroup, QHBoxLayout, QCheckBox
+    QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QComboBox, QRadioButton,
+    QButtonGroup, QHBoxLayout, QCheckBox
 )
 from PyQt6.QtCore import QPropertyAnimation, QRect, QEasingCurve
 
 from converter import convert_xlsx_to_docx
+
 
 def visible_if_checked(checkbox_attr_name, target_widget_attr_name):
     def decorator(func):
@@ -14,14 +16,11 @@ def visible_if_checked(checkbox_attr_name, target_widget_attr_name):
             checkbox = getattr(self, checkbox_attr_name)
             target_widget = getattr(self, target_widget_attr_name)
             target_widget.setVisible(checkbox.isChecked())
-
             if not checkbox.isChecked():
                 target_widget.setChecked(False)
-
             return func(self, *args, **kwargs)
         return wrapper
     return decorator
-
 
 
 class MainWindow(QMainWindow):
@@ -32,22 +31,40 @@ class MainWindow(QMainWindow):
 
         self.layout = QVBoxLayout()
 
-        # File detection label
+        # Start screen - only label and button
         self.label = QLabel("Wybierz plik XLSX:")
         self.layout.addWidget(self.label)
 
-        # File selection button
         self.button_select = QPushButton("Wybierz plik")
         self.button_select.clicked.connect(self.select_file)
         self.layout.addWidget(self.button_select)
 
-        # ComboBox for sheet selection (hide by default)
+        # UI section appears after file selection
+        self.init_secondary_ui()
+
+        container = QWidget()
+        container.setLayout(self.layout)
+        self.setCentralWidget(container)
+
+        self.xlsx_file = ""
+        self.sheets = {}
+
+    def init_secondary_ui(self):
         self.sheet_selector = QComboBox()
         self.sheet_selector.currentTextChanged.connect(self.load_selected_sheet)
         self.sheet_selector.setVisible(False)
         self.layout.addWidget(self.sheet_selector)
 
-        self.headers = QCheckBox("Dodaj nagłowki")
+        self.toggle_preview_button = QPushButton("Pokaż podgląd arukasz")
+        self.toggle_preview_button.clicked.connect(self.toggle_preview)
+        self.toggle_preview_button.setVisible(False)
+        self.layout.addWidget(self.toggle_preview_button)
+
+        self.table = QTableWidget()
+        self.table.setVisible(False)
+        self.layout.addWidget(self.table)
+
+        self.headers = QCheckBox("Dodaj nagłówki")
         self.headers.setVisible(False)
         self.headers.toggled.connect(self.toggle_headers_bold)
 
@@ -59,13 +76,11 @@ class MainWindow(QMainWindow):
         hbox3.addWidget(self.headers_bold)
         self.layout.addLayout(hbox3)
 
-        # font ComboBox
         self.font_combo = QComboBox()
         self.font_combo.addItems(["Arial", "Times New Roman", "Calibri", "Verdana"])
         self.font_combo.setCurrentText("Arial")
         self.font_combo.setVisible(False)
 
-        # font size ComboBox
         self.size_combo = QComboBox()
         self.size_combo.addItems(["10", "11", "12", "14", "16", "18", "20"])
         self.size_combo.setCurrentText("12")
@@ -73,27 +88,23 @@ class MainWindow(QMainWindow):
 
         hbox_font = QHBoxLayout()
         hbox_font.addWidget(self.font_combo)
-        hbox_font.addSpacing(20)  # space
+        hbox_font.addSpacing(20)
         hbox_font.addWidget(self.size_combo)
         self.layout.addLayout(hbox_font)
 
-        # Button for hiding/showing preview
-        self.toggle_preview_button = QPushButton("Pokaż podgląd")
-        self.toggle_preview_button.clicked.connect(self.toggle_preview)
-        self.toggle_preview_button.setVisible(False)
-        self.layout.addWidget(self.toggle_preview_button)
 
-        # Table for preview (hide by default)
-        self.table = QTableWidget()
-        self.table.setVisible(False)
-        self.layout.addWidget(self.table)
 
         self.type_label = QLabel("Konwertuj jako")
+        self.type_label.setVisible(False)
+
         self.radio_table = QRadioButton("Tabela")
         self.radio_spaces = QRadioButton("Ze spacjami")
         self.radio_list = QRadioButton("Lista")
         self.radio_page = QRadioButton("Lista ze stronami")
         self.radio_table.setChecked(True)
+
+        for rb in [self.radio_table, self.radio_spaces, self.radio_list, self.radio_page]:
+            rb.setVisible(False)
 
         self.group_format = QButtonGroup(self)
         self.group_format.addButton(self.radio_table)
@@ -107,11 +118,14 @@ class MainWindow(QMainWindow):
         hbox1.addWidget(self.radio_spaces)
         hbox1.addWidget(self.radio_list)
         hbox1.addWidget(self.radio_page)
+        self.layout.addLayout(hbox1)
 
-        # second group (DOCX or PDF)
         self.radio_docx = QRadioButton("Konwertuj do DOCX")
         self.radio_pdf = QRadioButton("Konwertuj do PDF")
         self.radio_docx.setChecked(True)
+
+        self.radio_docx.setVisible(False)
+        self.radio_pdf.setVisible(False)
 
         self.group_output = QButtonGroup(self)
         self.group_output.addButton(self.radio_docx)
@@ -120,49 +134,40 @@ class MainWindow(QMainWindow):
         hbox2 = QHBoxLayout()
         hbox2.addWidget(self.radio_docx)
         hbox2.addWidget(self.radio_pdf)
-
-        # add element to layout
-        self.layout.addLayout(hbox1)
         self.layout.addLayout(hbox2)
-        # convert button
+
         self.button_convert = QPushButton("Konwertuj")
         self.button_convert.clicked.connect(self.convert_file)
         self.button_convert.setVisible(False)
         self.layout.addWidget(self.button_convert)
 
-        # Status label
         self.status_label = QLabel("")
         self.layout.addWidget(self.status_label)
 
-        # Layout container
-        container = QWidget()
-        container.setLayout(self.layout)
-        self.setCentralWidget(container)
+        # visibility manage list
+        self.secondary_widgets = [
+            self.sheet_selector, self.headers, self.headers_bold,
+            self.font_combo, self.size_combo, self.toggle_preview_button,
+            self.button_convert, self.type_label, self.radio_table, self.radio_spaces,
+            self.radio_list, self.radio_page, self.radio_docx, self.radio_pdf
+        ]
 
-        self.xlsx_file = ""
-        self.sheets = {}
+    def show_secondary_ui(self):
+        for widget in self.secondary_widgets:
+            widget.setVisible(True)
 
     def select_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Wybierz plik XLSX", "", "Excel Files (*.xlsx)")
         if file_path:
             self.xlsx_file = file_path
             self.original_file_name = file_path.split("/")[-1]
-            self.label.setText(f"Selected: {file_path}")
+            self.label.setText(f"Wybrany plik: {self.original_file_name}")
 
-            # loading sheets
             self.sheets = pd.read_excel(self.xlsx_file, sheet_name=None)
             self.sheet_selector.clear()
             self.sheet_selector.addItems(self.sheets.keys())
+            self.show_secondary_ui()
 
-            # Visibility toggling
-            self.sheet_selector.setVisible(True)
-            self.button_convert.setVisible(True)
-            self.toggle_preview_button.setVisible(True)
-            self.headers.setVisible(True)
-            self.font_combo.setVisible(True)
-            self.size_combo.setVisible(True)
-
-            # First sheet by default
             first_sheet = self.sheet_selector.currentText()
             if first_sheet:
                 self.load_sheet(first_sheet)
@@ -189,7 +194,7 @@ class MainWindow(QMainWindow):
             self.animate_resize(600, 400)
         else:
             self.table.setVisible(True)
-            self.toggle_preview_button.setText("Ukryj podgląd")
+            self.toggle_preview_button.setText("Ukryj podgląd arkusza")
             self.animate_resize(800, 600)
 
     def convert_file(self):
@@ -211,7 +216,7 @@ class MainWindow(QMainWindow):
         if save_path:
             selected_sheet = self.sheet_selector.currentText()
             df = self.sheets[selected_sheet]
-            df.to_excel("temp.xlsx", index=False)  # temp file with selected sheet
+            df.to_excel("temp.xlsx", index=False)
 
             convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(),
                                  self.headers_bold.isChecked(), font_size, font, form, self.original_file_name)
