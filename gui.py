@@ -10,20 +10,6 @@ from PyQt6.QtCore import QPropertyAnimation, QRect, QEasingCurve
 
 from converter import convert_xlsx_to_docx
 
-
-def visible_if_checked(checkbox_attr_name, target_widget_attr_name):
-    def decorator(func):
-        def wrapper(self, *args, **kwargs):
-            checkbox = getattr(self, checkbox_attr_name)
-            target_widget = getattr(self, target_widget_attr_name)
-            target_widget.setVisible(checkbox.isChecked())
-            if not checkbox.isChecked():
-                target_widget.setChecked(False)
-            return func(self, *args, **kwargs)
-        return wrapper
-    return decorator
-
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -79,7 +65,6 @@ class MainWindow(QMainWindow):
 
         self.headers = QCheckBox("Dodaj nagłówki")
         self.headers.setVisible(False)
-        self.headers.toggled.connect(self.toggle_headers_bold)
 
         self.headers_bold = QCheckBox("Nagłówki pogrubione")
         self.headers_bold.setVisible(False)
@@ -165,7 +150,8 @@ class MainWindow(QMainWindow):
             self.sheet_selector, self.headers, self.headers_bold,
             self.font_combo, self.size_combo, self.toggle_preview_button,
             self.button_convert, self.type_label, self.radio_table, self.radio_spaces,
-            self.radio_list, self.radio_page, self.radio_docx, self.radio_pdf, self.title_label, self.title_input
+            self.radio_list, self.radio_page, self.radio_docx, self.radio_pdf, self.title_label, self.title_input,
+            self.headers_bold
         ]
         self.load_settings()
 
@@ -257,9 +243,6 @@ class MainWindow(QMainWindow):
         self.animation.setEasingCurve(QEasingCurve.Type.OutCubic)
         self.animation.start()
 
-    @visible_if_checked('headers', 'headers_bold')
-    def toggle_headers_bold(self, checked):
-        pass
 
     def load_settings(self):
         if os.path.exists("settings.json"):
