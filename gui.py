@@ -4,6 +4,8 @@ from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QFileDialog, QLabel,
     QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QComboBox, QRadioButton, QButtonGroup, QHBoxLayout, QCheckBox
 )
+from PyQt6.QtCore import QPropertyAnimation, QRect, QEasingCurve
+
 from converter import convert_xlsx_to_docx
 
 def visible_if_checked(checkbox_attr_name, target_widget_attr_name):
@@ -25,17 +27,17 @@ def visible_if_checked(checkbox_attr_name, target_widget_attr_name):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("XLSX to DOCX/PDF Converter")
+        self.setWindowTitle("Konwerter pliku XLSX do Worda/PDF")
         self.setGeometry(100, 100, 600, 400)
 
         self.layout = QVBoxLayout()
 
         # File detection label
-        self.label = QLabel("Choose XLSX file to convert:")
+        self.label = QLabel("Wybierz plik XLSX:")
         self.layout.addWidget(self.label)
 
         # File selection button
-        self.button_select = QPushButton("Select file")
+        self.button_select = QPushButton("Wybierz plik")
         self.button_select.clicked.connect(self.select_file)
         self.layout.addWidget(self.button_select)
 
@@ -141,7 +143,7 @@ class MainWindow(QMainWindow):
         self.sheets = {}
 
     def select_file(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, "Choose XLSX file", "", "Excel Files (*.xlsx)")
+        file_path, _ = QFileDialog.getOpenFileName(self, "Wybierz plik XLSX", "", "Excel Files (*.xlsx)")
         if file_path:
             self.xlsx_file = file_path
             self.original_file_name = file_path.split("/")[-1]
@@ -183,17 +185,19 @@ class MainWindow(QMainWindow):
     def toggle_preview(self):
         if self.table.isVisible():
             self.table.setVisible(False)
-            self.toggle_preview_button.setText("Show preview")
+            self.toggle_preview_button.setText("Pokaż podgląd")
+            self.animate_resize(600, 400)
         else:
             self.table.setVisible(True)
-            self.toggle_preview_button.setText("Hide preview")
+            self.toggle_preview_button.setText("Ukryj podgląd")
+            self.animate_resize(800, 600)
 
     def convert_file(self):
         if not self.xlsx_file:
-            self.status_label.setText("Choose XLSX file first!")
+            self.status_label.setText("Wybierz najpierw plik XLSX!")
             return
 
-        save_path, _ = QFileDialog.getSaveFileName(self, "Save as", "", "Word Files (*.docx)")
+        save_path, _ = QFileDialog.getSaveFileName(self, "Zapisz jako", "", "Word Files (*.docx)")
         font_size = self.size_combo.currentText()
         font = self.font_combo.currentText()
         if self.radio_table.isChecked():
@@ -209,8 +213,24 @@ class MainWindow(QMainWindow):
             df = self.sheets[selected_sheet]
             df.to_excel("temp.xlsx", index=False)  # temp file with selected sheet
 
-            convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(), self.headers_bold.isChecked(), font_size, font, form, self.original_file_name)
-            self.status_label.setText("Conversion successful!")
+            convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(),
+                                 self.headers_bold.isChecked(), font_size, font, form, self.original_file_name)
+            self.status_label.setText("Konwersja przebiegła pomyślnie!")
+
+    def animate_resize(self, target_width, target_height):
+        start_geometry = self.geometry()
+        end_geometry = QRect(
+            start_geometry.x(),
+            start_geometry.y(),
+            target_width,
+            target_height
+        )
+        self.animation = QPropertyAnimation(self, b"geometry")
+        self.animation.setDuration(300)
+        self.animation.setStartValue(start_geometry)
+        self.animation.setEndValue(end_geometry)
+        self.animation.setEasingCurve(QEasingCurve.Type.OutCubic)
+        self.animation.start()
 
     @visible_if_checked('headers', 'headers_bold')
     def toggle_headers_bold(self, checked):
