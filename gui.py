@@ -3,7 +3,7 @@ import pandas as pd
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QFileDialog, QLabel,
     QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QComboBox, QRadioButton,
-    QButtonGroup, QHBoxLayout, QCheckBox
+    QButtonGroup, QHBoxLayout, QCheckBox, QLineEdit
 )
 from PyQt6.QtCore import QPropertyAnimation, QRect, QEasingCurve
 
@@ -64,6 +64,14 @@ class MainWindow(QMainWindow):
         self.table = QTableWidget()
         self.table.setVisible(False)
         self.layout.addWidget(self.table)
+
+        self.title_label = QLabel("Tytuł dokumentu:")
+        self.title_label.setVisible(False)
+        self.title_input = QLineEdit()
+        self.title_input.setPlaceholderText("Wprowadź tytuł dokumentu (domyślnie zostanie dodana nazwa pliku XLSX)")
+        self.title_input.setVisible(False)
+        self.layout.addWidget(self.title_label)
+        self.layout.addWidget(self.title_input)
 
         self.headers = QCheckBox("Dodaj nagłówki")
         self.headers.setVisible(False)
@@ -151,7 +159,7 @@ class MainWindow(QMainWindow):
             self.sheet_selector, self.headers, self.headers_bold,
             self.font_combo, self.size_combo, self.toggle_preview_button,
             self.button_convert, self.type_label, self.radio_table, self.radio_spaces,
-            self.radio_list, self.radio_page, self.radio_docx, self.radio_pdf
+            self.radio_list, self.radio_page, self.radio_docx, self.radio_pdf, self.title_label, self.title_input
         ]
 
     def show_secondary_ui(self):
@@ -221,7 +229,8 @@ class MainWindow(QMainWindow):
             df.to_excel("temp.xlsx", index=False)
 
             convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(),
-                                 self.headers_bold.isChecked(), font_size, font, form, self.original_file_name)
+                                 self.headers_bold.isChecked(), font_size, font,
+                                 form, self.title_input.text() or self.original_file_name)
             self.status_label.setText("Konwersja przebiegła pomyślnie! Plik zapisano w lokalizacji:\n{}".format(save_path))
 
     def animate_resize(self, target_width, target_height):

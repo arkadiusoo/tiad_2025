@@ -10,7 +10,7 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
     df = pd.read_excel(xlsx_path)
     # dockx file creating
     doc = Document()
-    header = "Data from file {}".format(original_name)
+    header = original_name
     heading = doc.add_heading(header, level=1)
     for run in heading.runs:
         run.font.name = font
