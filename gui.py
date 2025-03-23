@@ -1,4 +1,5 @@
-import sys
+import json
+import os
 import pandas as pd
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QFileDialog, QLabel,
@@ -161,6 +162,7 @@ class MainWindow(QMainWindow):
             self.button_convert, self.type_label, self.radio_table, self.radio_spaces,
             self.radio_list, self.radio_page, self.radio_docx, self.radio_pdf, self.title_label, self.title_input
         ]
+        self.load_settings()
 
     def show_secondary_ui(self):
         for widget in self.secondary_widgets:
@@ -252,3 +254,34 @@ class MainWindow(QMainWindow):
     def toggle_headers_bold(self, checked):
         pass
 
+    def load_settings(self):
+        if os.path.exists("settings.json"):
+            with open("settings.json", "r") as f:
+                data = json.load(f)
+                self.title_input.setText(data.get("title", ""))
+                self.font_combo.setCurrentText(data.get("font", "Arial"))
+                self.size_combo.setCurrentText(data.get("font_size", "12"))
+                self.headers.setChecked(data.get("headers", False))
+                self.headers_bold.setChecked(data.get("headers_bold", False))
+                format_value = data.get("form", 1)
+                [self.radio_table, self.radio_spaces, self.radio_list, self.radio_page][format_value - 1].setChecked(
+                    True)
+                (self.radio_pdf if data.get("pdf", False) else self.radio_docx).setChecked(True)
+
+    def save_settings(self):
+        data = {
+            "title": self.title_input.text(),
+            "font": self.font_combo.currentText(),
+            "font_size": self.size_combo.currentText(),
+            "headers": self.headers.isChecked(),
+            "headers_bold": self.headers_bold.isChecked(),
+            "form": [self.radio_table, self.radio_spaces, self.radio_list, self.radio_page].index(
+                self.group_format.checkedButton()) + 1,
+            "pdf": self.radio_pdf.isChecked()
+        }
+        with open("settings.json", "w") as f:
+            json.dump(data, f, indent=4)
+
+    def closeEvent(self, event):
+        self.save_settings()
+        event.accept()

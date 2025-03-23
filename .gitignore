@@ -174,3 +174,4 @@ cython_debug/
 .pypirc
 /files_for_testing
 .temp.xlsx
+/settings.json
