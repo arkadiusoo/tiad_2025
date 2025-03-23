@@ -112,7 +112,6 @@ def convert_xlsx_to_docx(xlsx_path,
 
     elif form == 3 or form == 4:
         for idx, row in df.iterrows():
-            # Numeracja
             p_num = doc.add_paragraph()
             p_num.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
             p_num.paragraph_format.space_after = spacing
@@ -146,10 +145,8 @@ def convert_xlsx_to_docx(xlsx_path,
             if form == 4 and idx < len(df) - 1:
                 doc.add_page_break()
 
-    # Zapis dokumentu
     doc.save(docx_path)
 
-    # Eksport PDF (jeśli wybrano)
     if fileType:
         try:
             convert_pdf(docx_path)
