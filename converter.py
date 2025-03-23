@@ -3,6 +3,8 @@ from docx import Document
 from docx.shared import Pt
 import os
 import subprocess
+from docx2pdf import convert as convert_pdf
+import platform
 
 def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, font_size, font, form, original_name):
     font_size = (int(font_size))
@@ -136,12 +138,14 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
                 doc.add_page_break()
 
     doc.save(docx_path)
-    if fileType == True:
-        filename = os.path.basename(docx_path)
-        #Konwersja do pdf --- nalezy tu umiescic sciezke do libre w komputerze ale mozliwe ze masz ta sama
-        subprocess.run(['/Applications/LibreOffice.app/Contents/MacOS/soffice', '--headless', '--convert-to', 'pdf', filename, '--outdir', 'tmp'], check=True)
-        os.rename(f'tmp/{filename.replace(".docx",".pdf")}', filename.replace(".docx",".pdf"))
-        os.remove(docx_path)
+    if fileType:
+        try:
+            convert_pdf(docx_path)
+            os.remove(docx_path)
+        except Exception as e:
+            print("Błąd konwersji do PDF:", e)
+            if platform.system() == "Linux":
+                print("Konwersja PDF nie jest obsługiwana na Linuxie przez docx2pdf.")
 
 
 

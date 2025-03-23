@@ -4,7 +4,7 @@ import pandas as pd
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QPushButton, QFileDialog, QLabel,
     QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QComboBox, QRadioButton,
-    QButtonGroup, QHBoxLayout, QCheckBox, QLineEdit
+    QButtonGroup, QHBoxLayout, QCheckBox, QLineEdit, QMessageBox
 )
 from PyQt6.QtCore import QPropertyAnimation, QRect, QEasingCurve
 
@@ -28,8 +28,11 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Konwerter pliku XLSX do Worda/PDF")
-        self.setGeometry(100, 100, 600, 400)
-
+        self.resize(600, 450)
+        screen_geometry = QApplication.primaryScreen().geometry()
+        x = (screen_geometry.width() - self.width()) // 2
+        y = (screen_geometry.height() - self.height()) // 2
+        self.move(x, y)
 
         self.layout = QVBoxLayout()
 
@@ -132,6 +135,8 @@ class MainWindow(QMainWindow):
 
         self.radio_docx = QRadioButton("Konwertuj do DOCX")
         self.radio_pdf = QRadioButton("Konwertuj do PDF")
+
+
         self.radio_docx.setChecked(True)
 
         self.radio_docx.setVisible(False)
@@ -167,6 +172,7 @@ class MainWindow(QMainWindow):
     def show_secondary_ui(self):
         for widget in self.secondary_widgets:
             widget.setVisible(True)
+        self.radio_pdf.toggled.connect(self.warn_pdf)
 
     def select_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "Wybierz plik XLSX", "", "Excel Files (*.xlsx)")
@@ -203,7 +209,7 @@ class MainWindow(QMainWindow):
         if self.table.isVisible():
             self.table.setVisible(False)
             self.toggle_preview_button.setText("Pokaż podgląd")
-            self.animate_resize(600, 400)
+            self.animate_resize(600, 450)
         else:
             self.table.setVisible(True)
             self.toggle_preview_button.setText("Ukryj podgląd arkusza")
@@ -225,6 +231,7 @@ class MainWindow(QMainWindow):
             form = 3
         else:
             form = 4
+        self.warn_pdf()
         if save_path:
             selected_sheet = self.sheet_selector.currentText()
             df = self.sheets[selected_sheet]
@@ -285,3 +292,16 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.save_settings()
         event.accept()
+
+    def warn_pdf(self):
+        if self.radio_pdf.isChecked():
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Warning)
+            msg.setWindowTitle("Ograniczenie PDF")
+            msg.setText(
+                "Eksport do PDF nie jest wspierany na systemie Linux.\n\n"
+                "Funkcja działa tylko na systemach Windows i macOS,\n"
+                "i wymaga zainstalowanego programu Microsoft Word."
+            )
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.exec()
