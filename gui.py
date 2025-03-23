@@ -29,6 +29,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Konwerter pliku XLSX do Worda/PDF")
         self.setGeometry(100, 100, 600, 400)
 
+
         self.layout = QVBoxLayout()
 
         # Start screen - only label and button
@@ -143,6 +144,7 @@ class MainWindow(QMainWindow):
 
         self.status_label = QLabel("")
         self.layout.addWidget(self.status_label)
+        self.status_label.setWordWrap(True)
 
         # visibility manage list
         self.secondary_widgets = [
@@ -220,7 +222,7 @@ class MainWindow(QMainWindow):
 
             convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(),
                                  self.headers_bold.isChecked(), font_size, font, form, self.original_file_name)
-            self.status_label.setText("Konwersja przebiegła pomyślnie!")
+            self.status_label.setText("Konwersja przebiegła pomyślnie! Plik zapisano w lokalizacji:\n{}".format(save_path))
 
     def animate_resize(self, target_width, target_height):
         start_geometry = self.geometry()
