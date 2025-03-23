@@ -74,6 +74,9 @@ class MainWindow(QMainWindow):
         hbox3.addWidget(self.headers_bold)
         self.layout.addLayout(hbox3)
 
+        self.font_label =  QLabel("Rodzaj oraz rozmiar czcionki:")
+        self.layout.addWidget(self.font_label)
+        self.font_label.setVisible(False)
         self.font_combo = QComboBox()
         self.font_combo.addItems(["Arial", "Times New Roman", "Calibri", "Verdana"])
         self.font_combo.setCurrentText("Arial")
@@ -90,9 +93,25 @@ class MainWindow(QMainWindow):
         hbox_font.addWidget(self.size_combo)
         self.layout.addLayout(hbox_font)
 
+        self.align_combo = QComboBox()
+        self.align_combo.addItems(["Lewo", "Środek", "Prawo"])
+        self.align_combo.setCurrentText("Lewo")
+        self.align_combo.setVisible(False)
+        self.align_label = QLabel("Wyrównanie tekstu:")
+        self.align_label.setVisible(False)
+        self.layout.addWidget(self.align_label)
+        self.layout.addWidget(self.align_combo)
 
+        self.spacing_combo = QComboBox()
+        self.spacing_combo.addItems(["0", "6", "12", "18"])
+        self.spacing_combo.setCurrentText("6")
+        self.spacing_combo.setVisible(False)
+        self.spacing_label = QLabel("Odstęp między paragrafami (pkt):")
+        self.spacing_label.setVisible(False)
+        self.layout.addWidget(self.spacing_label)
+        self.layout.addWidget(self.spacing_combo)
 
-        self.type_label = QLabel("Konwertuj jako")
+        self.type_label = QLabel("Konwertuj jako:")
         self.type_label.setVisible(False)
 
         self.radio_table = QRadioButton("Tabela")
@@ -118,8 +137,11 @@ class MainWindow(QMainWindow):
         hbox1.addWidget(self.radio_page)
         self.layout.addLayout(hbox1)
 
-        self.radio_docx = QRadioButton("Konwertuj do DOCX")
-        self.radio_pdf = QRadioButton("Konwertuj do PDF")
+        self.convert_label = QLabel("Zapisz jako plik typu:")
+        self.convert_label.setVisible(False)
+        # self.layout.addWidget(self.convert_label)
+        self.radio_docx = QRadioButton("DOCX (Word)")
+        self.radio_pdf = QRadioButton("PDF")
 
 
         self.radio_docx.setChecked(True)
@@ -128,10 +150,12 @@ class MainWindow(QMainWindow):
         self.radio_pdf.setVisible(False)
 
         self.group_output = QButtonGroup(self)
+
         self.group_output.addButton(self.radio_docx)
         self.group_output.addButton(self.radio_pdf)
 
         hbox2 = QHBoxLayout()
+        hbox2.addWidget(self.convert_label)
         hbox2.addWidget(self.radio_docx)
         hbox2.addWidget(self.radio_pdf)
         self.layout.addLayout(hbox2)
@@ -151,7 +175,8 @@ class MainWindow(QMainWindow):
             self.font_combo, self.size_combo, self.toggle_preview_button,
             self.button_convert, self.type_label, self.radio_table, self.radio_spaces,
             self.radio_list, self.radio_page, self.radio_docx, self.radio_pdf, self.title_label, self.title_input,
-            self.headers_bold
+            self.headers_bold, self.spacing_label, self.spacing_combo,
+            self.align_label, self.align_combo, self.font_label, self.convert_label
         ]
         self.load_settings()
 
@@ -223,9 +248,17 @@ class MainWindow(QMainWindow):
             df = self.sheets[selected_sheet]
             df.to_excel("temp.xlsx", index=False)
 
-            convert_xlsx_to_docx("temp.xlsx", save_path, self.radio_pdf.isChecked(), self.headers.isChecked(),
-                                 self.headers_bold.isChecked(), font_size, font,
-                                 form, self.title_input.text() or self.original_file_name)
+            convert_xlsx_to_docx("temp.xlsx",
+                                 save_path,
+                                 self.radio_pdf.isChecked(),
+                                 self.headers.isChecked(),
+                                 self.headers_bold.isChecked(),
+                                 font_size,
+                                 font,
+                                 form, self.title_input.text() or self.original_file_name,
+                                 self.align_combo.currentText(),
+                                 int(self.spacing_combo.currentText())
+                                 )
             self.status_label.setText("Konwersja przebiegła pomyślnie! Plik zapisano w lokalizacji:\n{}".format(save_path))
 
     def animate_resize(self, target_width, target_height):
@@ -257,6 +290,8 @@ class MainWindow(QMainWindow):
                 [self.radio_table, self.radio_spaces, self.radio_list, self.radio_page][format_value - 1].setChecked(
                     True)
                 (self.radio_pdf if data.get("pdf", False) else self.radio_docx).setChecked(True)
+                self.align_combo.setCurrentText(data.get("align", "Lewo"))
+                self.spacing_combo.setCurrentText(data.get("spacing", "6"))
 
     def save_settings(self):
         data = {
@@ -267,7 +302,9 @@ class MainWindow(QMainWindow):
             "headers_bold": self.headers_bold.isChecked(),
             "form": [self.radio_table, self.radio_spaces, self.radio_list, self.radio_page].index(
                 self.group_format.checkedButton()) + 1,
-            "pdf": self.radio_pdf.isChecked()
+            "pdf": self.radio_pdf.isChecked(),
+            "align" : self.align_combo.currentText(),
+            "spacing": self.spacing_combo.currentText()
         }
         with open("settings.json", "w") as f:
             json.dump(data, f, indent=4)

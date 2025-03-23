@@ -1,19 +1,30 @@
 import pandas as pd
 from docx import Document
 from docx.shared import Pt
-import os
-import subprocess
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx2pdf import convert as convert_pdf
+import os
 import platform
 
-def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, font_size, font, form, original_name):
-    font_size = (int(font_size))
-    # file xlsx read
+def convert_xlsx_to_docx(xlsx_path,
+                         docx_path,
+                         fileType,
+                         headers,
+                         headers_bold,
+                         font_size,
+                         font,
+                         form,
+                         original_name,
+                         alignment,
+                         spacing):
+    font_size = int(font_size)
+    spacing = Pt(spacing)
+
     df = pd.read_excel(xlsx_path)
-    # dockx file creating
     doc = Document()
-    header = original_name
-    heading = doc.add_heading(header, level=1)
+
+    # Nagłówek dokumentu
+    heading = doc.add_heading(original_name, level=1)
     for run in heading.runs:
         run.font.name = font
         run.font.size = Pt(font_size)
@@ -28,10 +39,14 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
 
                 table = doc.add_table(rows=sub_df.shape[0] + 1, cols=sub_df.shape[1])
                 table.style = 'Table Grid'
-                if headers == True:
+
+                if headers:
                     for j, column in enumerate(sub_df.columns):
                         cell = table.cell(0, j)
-                        run = cell.paragraphs[0].add_run(str(column))
+                        para = cell.paragraphs[0]
+                        para.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+                        para.paragraph_format.space_after = spacing
+                        run = para.add_run(str(column))
                         run.font.name = font
                         run.font.size = Pt(font_size)
                         if headers_bold:
@@ -40,61 +55,80 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
                 for i, row in sub_df.iterrows():
                     for j, value in enumerate(row):
                         cell = table.cell(i + 1, j)
-                        run = cell.paragraphs[0].add_run(str(value))
+                        para = cell.paragraphs[0]
+                        para.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+                        para.paragraph_format.space_after = spacing
+                        run = para.add_run(str(value))
                         run.font.name = font
                         run.font.size = Pt(font_size)
 
                 doc.add_paragraph("")
         else:
-            # adding table to document
             table = doc.add_table(rows=df.shape[0] + 1, cols=df.shape[1])
             table.style = 'Table Grid'
-            # adding headers
-            if headers == True:
+
+            if headers:
                 for j, column in enumerate(df.columns):
                     cell = table.cell(0, j)
-                    run = cell.paragraphs[0].add_run(str(column))
+                    para = cell.paragraphs[0]
+                    para.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+                    para.paragraph_format.space_after = spacing
+                    run = para.add_run(str(column))
                     run.font.name = font
                     run.font.size = Pt(font_size)
                     if headers_bold:
                         run.bold = True
-            # adding data from excel
+
             for i, row in df.iterrows():
                 for j, value in enumerate(row):
                     cell = table.cell(i + 1, j)
-                    run = cell.paragraphs[0].add_run(str(value))
+                    para = cell.paragraphs[0]
+                    para.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+                    para.paragraph_format.space_after = spacing
+                    run = para.add_run(str(value))
                     run.font.name = font
                     run.font.size = Pt(font_size)
+
     elif form == 2:
-        # adding data from excel
-        header = ""
-        if headers == True:
-            for j, column in enumerate(df.columns):
-                header += str(column) + " "
+        if headers:
+            header_line = " ".join([str(col) for col in df.columns])
             p = doc.add_paragraph()
-            run = p.add_run(header.strip())
+            p.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+            p.paragraph_format.space_after = spacing
+            run = p.add_run(header_line.strip())
             run.font.name = font
             run.font.size = Pt(font_size)
             if headers_bold:
                 run.bold = True
-        for i, row in df.iterrows():
-            line_text = ""
-            for value in row:
-                line_text += str(value) + " "
+
+        for _, row in df.iterrows():
+            line_text = " ".join([str(value) for value in row])
             p = doc.add_paragraph()
+            p.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+            p.paragraph_format.space_after = spacing
             run = p.add_run(line_text.strip())
             run.font.name = font
             run.font.size = Pt(font_size)
-    elif form == 3:
+
+    elif form == 3 or form == 4:
         for idx, row in df.iterrows():
+            # Numeracja
             p_num = doc.add_paragraph()
+            p_num.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+            p_num.paragraph_format.space_after = spacing
             run_num = p_num.add_run(f"{idx + 1}.")
             run_num.font.name = font
             run_num.font.size = Pt(font_size)
+            if headers_bold:
+                run_num.bold = True
+
             for col in df.columns:
                 value = str(row[col])
                 p = doc.add_paragraph()
-                if headers == True:
+                p.alignment = {"Lewo": WD_ALIGN_PARAGRAPH.LEFT, "Środek": WD_ALIGN_PARAGRAPH.CENTER, "Prawo": WD_ALIGN_PARAGRAPH.RIGHT}[alignment]
+                p.paragraph_format.space_after = spacing
+
+                if headers:
                     run1 = p.add_run(f"{col}: ")
                     run1.font.name = font
                     run1.font.size = Pt(font_size)
@@ -105,39 +139,17 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
                     run2.font.name = font
                     run2.font.size = Pt(font_size)
                 else:
-                    run = p.add_run(f"{value}")
-                run.font.name = font
-                run.font.size = Pt(font_size)
-            doc.add_paragraph("")
-    else:
-        for idx, row in df.iterrows():
-            p_num = doc.add_paragraph()
-            run_num = p_num.add_run(f"{idx + 1}.")
-            run_num.font.name = font
-            run_num.font.size = Pt(font_size)
-            if headers_bold == True:
-                run_num.font.bold = True
-            for col in df.columns:
-                value = str(row[col])
-                p = doc.add_paragraph()
-                if headers == True:
-                    run1 = p.add_run(f"{col}: ")
-                    run1.font.name = font
-                    run1.font.size = Pt(font_size)
-                    if headers_bold:
-                        run1.bold = True
+                    run = p.add_run(value)
+                    run.font.name = font
+                    run.font.size = Pt(font_size)
 
-                    run2 = p.add_run(value)
-                    run2.font.name = font
-                    run2.font.size = Pt(font_size)
-                else:
-                    run = p.add_run(f"{value}")
-                run.font.name = font
-                run.font.size = Pt(font_size)
-            if idx < len(df) - 1:
+            if form == 4 and idx < len(df) - 1:
                 doc.add_page_break()
 
+    # Zapis dokumentu
     doc.save(docx_path)
+
+    # Eksport PDF (jeśli wybrano)
     if fileType:
         try:
             convert_pdf(docx_path)
@@ -146,6 +158,3 @@ def convert_xlsx_to_docx(xlsx_path, docx_path, fileType, headers, headers_bold, 
             print("Błąd konwersji do PDF:", e)
             if platform.system() == "Linux":
                 print("Konwersja PDF nie jest obsługiwana na Linuxie przez docx2pdf.")
-
-
-
