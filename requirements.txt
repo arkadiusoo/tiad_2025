@@ -1,4 +1,0 @@
-openpyxl
-python-docx
-pandas
-docx2pdf
