@@ -2,5 +2,61 @@
   {
     "name": "Kanapka z serem",
     "ingredients": ["chleb", "ser", "masło"]
+  },
+  {
+    "name": "Jajecznica",
+    "ingredients": ["jajka", "masło", "szczypiorek"]
+  },
+  {
+    "name": "Sałatka grecka",
+    "ingredients": ["pomidor", "ogórek", "feta", "oliwki", "cebula", "oliwa"]
+  },
+  {
+    "name": "Spaghetti bolognese",
+    "ingredients": ["makaron", "mięso mielone", "cebula", "czosnek", "pomidory", "oliwa"]
+  },
+  {
+    "name": "Zupa pomidorowa",
+    "ingredients": ["pomidory", "marchew", "seler", "cebula", "śmietana", "makaron"]
+  },
+  {
+    "name": "Placki ziemniaczane",
+    "ingredients": ["ziemniaki", "jajka", "mąka", "cebula", "olej"]
+  },
+  {
+    "name": "Tosty z szynką i serem",
+    "ingredients": ["chleb tostowy", "szynka", "ser", "masło"]
+  },
+  {
+    "name": "Omlet z warzywami",
+    "ingredients": ["jajka", "papryka", "cebula", "szpinak", "ser"]
+  },
+  {
+    "name": "Pizza margherita",
+    "ingredients": ["ciasto", "sos pomidorowy", "ser mozzarella", "bazylia", "oliwa"]
+  },
+  {
+    "name": "Kurczak curry",
+    "ingredients": ["kurczak", "cebula", "czosnek", "mleko kokosowe", "przyprawa curry", "ryż"]
+  },
+  {
+    "name": "Naleśniki",
+    "ingredients": ["mąka", "jajka", "mleko", "woda", "olej", "cukier"]
+  },
+  {
+    "name": "Zupa krem z dyni",
+    "ingredients": ["dynia", "cebula", "czosnek", "bulion", "śmietana", "imbir"]
+  },
+  {
+    "name": "Kopytka",
+    "ingredients": ["ziemniaki", "mąka", "jajka", "sól"]
+  },
+  {
+    "name": "Łosoś pieczony",
+    "ingredients": ["łosoś", "cytryna", "czosnek", "masło", "koperek"]
+  },
+  {
+    "name": "Bigos",
+    "ingredients": ["kapusta kiszona", "kapusta biała", "mięso", "cebula", "śliwki suszone", "liść laurowy"]
   }
 ]
