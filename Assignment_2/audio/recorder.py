@@ -86,11 +86,16 @@ class MicrophoneRecorderDialog(QDialog):
         self.layout.addWidget(self.stop_button)
 
         self.volume_plot = pg.PlotWidget()
-        self.volume_plot.setYRange(0, 3000)
-        self.volume_plot.setLabel('left', 'Volume (RMS)')
-        self.volume_plot.setLabel('bottom', 'Frame')
+        self.volume_plot.setYRange(-3000, 3000)
+        self.volume_plot.setMouseEnabled(x=False, y=False)
+        self.volume_plot.hideAxis('bottom')
+        self.volume_plot.hideAxis('left')
+        self.volume_plot.setBackground('k')
         self.volume_data = [0] * 100
-        self.volume_curve = self.volume_plot.plot(self.volume_data, pen='g')
+        self.bar_positive = pg.BarGraphItem(x=list(range(100)), height=self.volume_data, width=0.8, brush='r')
+        self.bar_negative = pg.BarGraphItem(x=list(range(100)), height=[-v for v in self.volume_data], width=0.8, brush='r')
+        self.volume_plot.addItem(self.bar_positive)
+        self.volume_plot.addItem(self.bar_negative)
         self.layout.addWidget(self.volume_plot)
 
         self.setLayout(self.layout)
@@ -111,4 +116,5 @@ class MicrophoneRecorderDialog(QDialog):
 
     def update_volume(self, rms):
         self.volume_data = self.volume_data[1:] + [rms]
-        self.volume_curve.setData(self.volume_data)
+        self.bar_positive.setOpts(height=self.volume_data)
+        self.bar_negative.setOpts(height=[-v for v in self.volume_data])
