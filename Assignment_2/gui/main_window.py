@@ -61,8 +61,10 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Error", str(e))
 
     def handle_record(self):
-        file_path = recorder.record_microphone()
-        self.process_audio_file(file_path)
+        from Assignment_2.audio.recorder import MicrophoneRecorderDialog
+        dialog = MicrophoneRecorderDialog(self)
+        dialog.recording_finished.connect(self.process_audio_file)
+        dialog.exec()
 
     def handle_load(self):
         file_path, _ = QFileDialog.getOpenFileName(
