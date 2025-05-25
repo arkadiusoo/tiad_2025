@@ -1,8 +1,9 @@
 import sys
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QPushButton,
-    QVBoxLayout, QLabel, QTextEdit, QFileDialog, QMessageBox,
-    QHBoxLayout, QSizePolicy
+    QVBoxLayout, QLabel, QFileDialog, QMessageBox,
+    QScrollArea, QHBoxLayout, QFrame, QVBoxLayout, QSizePolicy
 )
 from Assignment_2.audio import recorder
 from Assignment_2.nlp import extractor
@@ -12,10 +13,9 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Filtr przepisów głosowych")
         self.setMinimumSize(700, 500)
-
         self.locale = "pl-PL"
 
-        # Przyciski
+
         self.button_record = QPushButton("Nagraj z mikrofonu")
         self.button_record.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.button_record.clicked.connect(self.handle_record)
@@ -28,25 +28,31 @@ class MainWindow(QMainWindow):
         button_layout.addWidget(self.button_record)
         button_layout.addWidget(self.button_load)
 
-        # Składniki
+
         self.ingredients_label = QLabel("Wykryte składniki:")
-        self.ingredients_text = QTextEdit()
-        self.ingredients_text.setReadOnly(True)
-        self.ingredients_text.setFixedHeight(100)
+        self.ingredients_area = QScrollArea()
+        self.ingredients_container = QWidget()
+        self.ingredients_layout = QVBoxLayout()
+        self.ingredients_container.setLayout(self.ingredients_layout)
+        self.ingredients_area.setWidgetResizable(True)
+        self.ingredients_area.setWidget(self.ingredients_container)
 
-        # Przepisy
+
         self.recipes_label = QLabel("Dopasowane przepisy:")
-        self.recipes_text = QTextEdit()
-        self.recipes_text.setReadOnly(True)
-        self.recipes_text.setFixedHeight(200)
+        self.recipes_area = QScrollArea()
+        self.recipes_container = QWidget()
+        self.recipes_layout = QVBoxLayout()
+        self.recipes_container.setLayout(self.recipes_layout)
+        self.recipes_area.setWidgetResizable(True)
+        self.recipes_area.setWidget(self.recipes_container)
 
-        # Układ główny
+
         layout = QVBoxLayout()
         layout.addLayout(button_layout)
         layout.addWidget(self.ingredients_label)
-        layout.addWidget(self.ingredients_text)
+        layout.addWidget(self.ingredients_area)
         layout.addWidget(self.recipes_label)
-        layout.addWidget(self.recipes_text)
+        layout.addWidget(self.recipes_area)
 
         container = QWidget()
         container.setLayout(layout)
@@ -60,15 +66,14 @@ class MainWindow(QMainWindow):
             ingredients = extractor.extract_ingredients(text, known)
             matches = extractor.filter_recipes(recipes, ingredients)
 
-            self.ingredients_text.setPlainText(", ".join(ingredients) if ingredients else "(brak)")
-            if matches:
-                results = "\n".join(
-                    f"- {r['name']} ({', '.join(r['ingredients'])})"
-                    for r in matches
-                )
-            else:
-                results = "Nie znaleziono pasujących przepisów."
-            self.recipes_text.setPlainText(results)
+            self.clear_layout(self.ingredients_layout)
+            for ing in ingredients:
+                self.ingredients_layout.addWidget(self.create_ingredient_tile(ing))
+
+            self.clear_layout(self.recipes_layout)
+            for recipe in matches:
+                self.recipes_layout.addWidget(self.create_recipe_tile(recipe))
+
         except Exception as e:
             QMessageBox.critical(self, "Błąd", str(e))
 
@@ -84,3 +89,40 @@ class MainWindow(QMainWindow):
         )
         if file_path:
             self.process_audio_file(file_path)
+
+    def clear_layout(self, layout):
+        while layout.count():
+            child = layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+    def create_ingredient_tile(self, text):
+        label = QLabel(text)
+        label.setStyleSheet("""
+            background-color: #2b2b2b;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        """)
+        return label
+
+    def create_recipe_tile(self, recipe):
+        frame = QFrame()
+        frame.setStyleSheet("""
+            background-color: #333;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 8px;
+        """)
+        layout = QVBoxLayout()
+        layout.setContentsMargins(5, 5, 5, 5)
+        name = QLabel(f"<b>{recipe['name']}</b>")
+        ingredients = QLabel(", ".join(recipe['ingredients']))
+        name.setStyleSheet("color: white; font-size: 15px;")
+        ingredients.setStyleSheet("color: #bbb; font-size: 13px;")
+        layout.addWidget(name)
+        layout.addWidget(ingredients)
+        frame.setLayout(layout)
+        return frame
