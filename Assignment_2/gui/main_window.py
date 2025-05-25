@@ -1,8 +1,10 @@
+import sys
 from PyQt6.QtWidgets import (
-    QMainWindow, QWidget, QVBoxLayout, QPushButton,
-    QListWidget, QLabel, QFileDialog, QMessageBox
+    QApplication, QMainWindow, QWidget, QPushButton,
+    QVBoxLayout, QLabel, QTextEdit, QFileDialog, QMessageBox
 )
-from PyQt6.QtCore import Qt
+from Assignment_2.audio import recorder
+from Assignment_2.nlp import extractor
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -10,47 +12,61 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Voice Recipe Filter")
         self.setMinimumSize(600, 400)
 
-        # main widgets
-        self.audio_button = QPushButton("Load or Record Audio")
-        self.audio_button.clicked.connect(self.load_audio)
+        self.locale = "pl-PL"
 
-        self.ingredient_label = QLabel("Detected Ingredients:")
-        self.ingredient_list = QListWidget()
+        self.button_record = QPushButton("Record Audio from Microphone")
+        self.button_record.clicked.connect(self.handle_record)
 
-        self.filter_button = QPushButton("Filter Recipes")
-        self.filter_button.clicked.connect(self.filter_recipes)
+        self.button_load = QPushButton("Load Audio File")
+        self.button_load.clicked.connect(self.handle_load)
 
-        self.recipe_label = QLabel("Filtered Recipes:")
-        self.recipe_list = QListWidget()
+        self.ingredients_label = QLabel("Detected Ingredients:")
+        self.ingredients_text = QTextEdit()
+        self.ingredients_text.setReadOnly(True)
 
-        # layout
+        self.recipes_label = QLabel("Matching Recipes:")
+        self.recipes_text = QTextEdit()
+        self.recipes_text.setReadOnly(True)
+
         layout = QVBoxLayout()
-        layout.addWidget(self.audio_button)
-        layout.addWidget(self.ingredient_label)
-        layout.addWidget(self.ingredient_list)
-        layout.addWidget(self.filter_button)
-        layout.addWidget(self.recipe_label)
-        layout.addWidget(self.recipe_list)
+        layout.addWidget(self.button_record)
+        layout.addWidget(self.button_load)
+        layout.addWidget(self.ingredients_label)
+        layout.addWidget(self.ingredients_text)
+        layout.addWidget(self.recipes_label)
+        layout.addWidget(self.recipes_text)
 
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
 
-    def load_audio(self):
-        # goal: recording or loading an audio file
+    def process_audio_file(self, file_path):
+        try:
+            text = recorder.recognize_audio(file_path, self.locale)
+            recipes = extractor.load_recipes()
+            known = extractor.known_ingredients_set(recipes)
+            ingredients = extractor.extract_ingredients(text, known)
+            matches = extractor.filter_recipes(recipes, ingredients)
+
+            self.ingredients_text.setPlainText(", ".join(ingredients) if ingredients else "(none)")
+            if matches:
+                results = "\n".join(
+                    f"- {r['name']} ({', '.join(r['ingredients'])})"
+                    for r in matches
+                )
+            else:
+                results = "No matching recipes found."
+            self.recipes_text.setPlainText(results)
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
+
+    def handle_record(self):
+        file_path = recorder.record_microphone()
+        self.process_audio_file(file_path)
+
+    def handle_load(self):
         file_path, _ = QFileDialog.getOpenFileName(
-            self, "Select Audio File", "", "Audio Files (*.wav *.mp3)"
+            self, "Select Audio File", "", "Audio Files (*.wav *.mp3, *.m4a)"
         )
         if file_path:
-            QMessageBox.information(self, "Audio Loaded", f"Loaded: {file_path}")
-            # TODO: Call function and update the list of components
-            self.ingredient_list.clear()
-            self.ingredient_list.addItem("tomato")
-            self.ingredient_list.addItem("onion")
-            self.ingredient_list.addItem("salt")
-
-    def filter_recipes(self):
-        # TODO: Search the recipe database by ingredients
-        self.recipe_list.clear()
-        self.recipe_list.addItem("Tomato Soup")
-        self.recipe_list.addItem("Grilled Vegetables")
+            self.process_audio_file(file_path)
