@@ -72,7 +72,8 @@ class MainWindow(QMainWindow):
 
             self.clear_layout(self.recipes_layout)
             for recipe in matches:
-                self.recipes_layout.addWidget(self.create_recipe_tile(recipe))
+                self.recipes_layout.addWidget(self.create_recipe_tile(recipe, ingredients))
+
 
         except Exception as e:
             QMessageBox.critical(self, "Błąd", str(e))
@@ -107,7 +108,7 @@ class MainWindow(QMainWindow):
         """)
         return label
 
-    def create_recipe_tile(self, recipe):
+    def create_recipe_tile(self, recipe, detected_ingredients):
         frame = QFrame()
         frame.setStyleSheet("""
             background-color: #333;
@@ -118,11 +119,23 @@ class MainWindow(QMainWindow):
         """)
         layout = QVBoxLayout()
         layout.setContentsMargins(5, 5, 5, 5)
+
         name = QLabel(f"<b>{recipe['name']}</b>")
-        ingredients = QLabel(", ".join(recipe['ingredients']))
         name.setStyleSheet("color: white; font-size: 15px;")
-        ingredients.setStyleSheet("color: #bbb; font-size: 13px;")
         layout.addWidget(name)
+
+
+        highlighted = []
+        for ing in recipe['ingredients']:
+            if ing in detected_ingredients:
+                highlighted.append(f"<span style='color: lightgreen'>{ing}</span>")
+            else:
+                highlighted.append(f"<span style='color: red'>{ing}</span>")
+        ingredients = QLabel(", ".join(highlighted))
+        ingredients.setStyleSheet("font-size: 13px;")
+        ingredients.setTextFormat(Qt.TextFormat.RichText)
+
         layout.addWidget(ingredients)
         frame.setLayout(layout)
         return frame
+
