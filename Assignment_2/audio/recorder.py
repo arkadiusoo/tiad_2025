@@ -4,6 +4,9 @@ from PyQt6.QtCore import QThread, pyqtSignal
 import speech_recognition as sr
 import wave
 import tempfile
+import pyaudio
+import numpy as np
+import pyqtgraph as pg
 
 def recognize_audio(file_path, language):
     r = sr.Recognizer()
@@ -17,10 +20,9 @@ def recognize_audio(file_path, language):
         except:
             return ""
 
-
-
 class RecordingThread(QThread):
     finished = pyqtSignal(str)
+    volume_update = pyqtSignal(float)
 
     def __init__(self, output_path):
         super().__init__()
@@ -28,17 +30,39 @@ class RecordingThread(QThread):
         self.running = True
 
     def run(self):
-        recognizer = sr.Recognizer()
-        mic = sr.Microphone()
-        with mic as source, wave.open(self.output_path, 'wb') as wf:
-            wf.setnchannels(1)
-            wf.setsampwidth(2)
-            wf.setframerate(16000)
+        CHUNK = 1024
+        FORMAT = pyaudio.paInt16
+        CHANNELS = 1
+        RATE = 16000
 
-            recognizer.adjust_for_ambient_noise(source)
-            while self.running:
-                audio = recognizer.listen(source, phrase_time_limit=1)
-                wf.writeframes(audio.get_raw_data())
+        p = pyaudio.PyAudio()
+        stream = p.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True,
+                        frames_per_buffer=CHUNK)
+
+        frames = []
+
+        while self.running:
+            data = stream.read(CHUNK, exception_on_overflow=False)
+            frames.append(data)
+
+            samples = np.frombuffer(data, dtype=np.int16)
+            if samples.size and np.all(np.isfinite(samples)):
+                rms = float(np.sqrt(np.mean(samples.astype(np.float32) ** 2)))
+                self.volume_update.emit(rms)
+
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
+
+        wf = wave.open(self.output_path, 'wb')
+        wf.setnchannels(CHANNELS)
+        wf.setsampwidth(p.get_sample_size(FORMAT))
+        wf.setframerate(RATE)
+        wf.writeframes(b''.join(frames))
+        wf.close()
 
         self.finished.emit(self.output_path)
 
@@ -60,12 +84,22 @@ class MicrophoneRecorderDialog(QDialog):
 
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.stop_button)
+
+        self.volume_plot = pg.PlotWidget()
+        self.volume_plot.setYRange(0, 3000)
+        self.volume_plot.setLabel('left', 'Volume (RMS)')
+        self.volume_plot.setLabel('bottom', 'Frame')
+        self.volume_data = [0] * 100
+        self.volume_curve = self.volume_plot.plot(self.volume_data, pen='g')
+        self.layout.addWidget(self.volume_plot)
+
         self.setLayout(self.layout)
 
         self.temp_file = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
         self.output_path = self.temp_file.name
         self.thread = RecordingThread(self.output_path)
         self.thread.finished.connect(self.handle_finished)
+        self.thread.volume_update.connect(self.update_volume)
         self.thread.start()
 
     def stop_recording(self):
@@ -74,3 +108,7 @@ class MicrophoneRecorderDialog(QDialog):
     def handle_finished(self, path):
         self.recording_finished.emit(path)
         self.accept()
+
+    def update_volume(self, rms):
+        self.volume_data = self.volume_data[1:] + [rms]
+        self.volume_curve.setData(self.volume_data)
