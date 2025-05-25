@@ -1,6 +1,11 @@
 import json
+import os
 
-def load_recipes(json_path="./data/recipes.json"):
+def load_recipes(json_path=None):
+    if json_path is None:
+        current_dir = os.path.join(os.path.dirname(__file__))
+        json_path = os.path.join(current_dir, "../data/recipes.json")
+        json_path = os.path.abspath(json_path)
     with open(json_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
