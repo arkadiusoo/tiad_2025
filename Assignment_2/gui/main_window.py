@@ -7,6 +7,7 @@ from PyQt6.QtWidgets import (
 )
 from Assignment_2.audio import recorder
 from Assignment_2.nlp import extractor
+from langdetect import detect
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -61,6 +62,7 @@ class MainWindow(QMainWindow):
     def process_audio_file(self, file_path):
         try:
             text = recorder.recognize_audio(file_path, self.locale)
+            detected_lang = detect(text)
             recipes = extractor.load_recipes()
             known = extractor.known_ingredients_set(recipes)
             ingredients = extractor.extract_ingredients(text, known)

@@ -15,7 +15,15 @@ def extract_ingredients(text, known_ingredients):
     return list(set(ingredients))
 
 def filter_recipes(recipes, ingredients):
-    return [r for r in recipes if all(i in r['ingredients'] for i in ingredients)]
+    matching_recipes = []
+    for recipe in recipes:
+        matched = set(recipe['ingredients']) & set(ingredients)
+        if matched:
+            matching_recipes.append((len(matched), recipe))
+
+    matching_recipes.sort(reverse=True, key=lambda x: x[0])
+
+    return [recipe for _, recipe in matching_recipes]
 
 def known_ingredients_set(recipes):
     return set(i for r in recipes for i in r['ingredients'])
