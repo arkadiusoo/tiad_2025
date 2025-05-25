@@ -76,6 +76,7 @@ class MicrophoneRecorderDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("Nagrywanie...")
         self.setModal(True)
+        self.setFixedSize(400, 250)
 
         self.layout = QVBoxLayout()
         self.label = QLabel("Nagrywanie... Wciśnij 'Zatrzymaj' aby zakończyć.")
