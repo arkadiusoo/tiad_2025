@@ -74,12 +74,12 @@ class MicrophoneRecorderDialog(QDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Recording...")
+        self.setWindowTitle("Nagrywanie...")
         self.setModal(True)
 
         self.layout = QVBoxLayout()
-        self.label = QLabel("Recording... Press 'Stop' to finish.")
-        self.stop_button = QPushButton("Stop")
+        self.label = QLabel("Nagrywanie... Wciśnij 'Zatrzymaj' aby zakończyć.")
+        self.stop_button = QPushButton("Zatrzymaj")
         self.stop_button.clicked.connect(self.stop_recording)
 
         self.layout.addWidget(self.label)
