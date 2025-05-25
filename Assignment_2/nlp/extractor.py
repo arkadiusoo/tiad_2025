@@ -14,15 +14,23 @@ def extract_ingredients(text, known_ingredients):
     ingredients = [w for w in words if w in known_ingredients]
     return list(set(ingredients))
 
-def filter_recipes(recipes, ingredients):
+def filter_recipes(recipes, ingredients, require_all=False):
     matching_recipes = []
+
+    input_ingredients = set(ingredients)
+
     for recipe in recipes:
-        matched = set(recipe['ingredients']) & set(ingredients)
-        if matched:
-            matching_recipes.append((len(matched), recipe))
+        recipe_ingredients = set(recipe['ingredients'])
+
+        if require_all:
+            if recipe_ingredients.issubset(input_ingredients):
+                matching_recipes.append((len(recipe_ingredients), recipe))
+        else:
+            matched = recipe_ingredients & input_ingredients
+            if matched:
+                matching_recipes.append((len(matched), recipe))
 
     matching_recipes.sort(reverse=True, key=lambda x: x[0])
-
     return [recipe for _, recipe in matching_recipes]
 
 def known_ingredients_set(recipes):

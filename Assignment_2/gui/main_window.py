@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QPushButton,
     QVBoxLayout, QLabel, QFileDialog, QMessageBox,
-    QScrollArea, QHBoxLayout, QFrame, QVBoxLayout, QSizePolicy
+    QScrollArea, QHBoxLayout, QFrame, QSizePolicy, QCheckBox
 )
 from Assignment_2.audio import recorder
 from Assignment_2.nlp import extractor
@@ -16,7 +16,10 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(700, 500)
         self.locale = "pl-PL"
 
+        self.last_ingredients = []
+        self.last_recipes = []
 
+        # Przyciski
         self.button_record = QPushButton("Nagraj z mikrofonu")
         self.button_record.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.button_record.clicked.connect(self.handle_record)
@@ -29,7 +32,12 @@ class MainWindow(QMainWindow):
         button_layout.addWidget(self.button_record)
         button_layout.addWidget(self.button_load)
 
+        # Checkbox
+        self.checkbox_strict = QCheckBox("Tylko przepisy na które masz składniki")
+        self.checkbox_strict.setChecked(False)
+        self.checkbox_strict.stateChanged.connect(self.on_checkbox_changed)
 
+        # Składniki
         self.ingredients_label = QLabel("Wykryte składniki:")
         self.ingredients_area = QScrollArea()
         self.ingredients_container = QWidget()
@@ -38,7 +46,7 @@ class MainWindow(QMainWindow):
         self.ingredients_area.setWidgetResizable(True)
         self.ingredients_area.setWidget(self.ingredients_container)
 
-
+        # Przepisy
         self.recipes_label = QLabel("Dopasowane przepisy:")
         self.recipes_area = QScrollArea()
         self.recipes_container = QWidget()
@@ -47,11 +55,12 @@ class MainWindow(QMainWindow):
         self.recipes_area.setWidgetResizable(True)
         self.recipes_area.setWidget(self.recipes_container)
 
-
+        # Layout główny
         layout = QVBoxLayout()
         layout.addLayout(button_layout)
         layout.addWidget(self.ingredients_label)
         layout.addWidget(self.ingredients_area)
+        layout.addWidget(self.checkbox_strict)
         layout.addWidget(self.recipes_label)
         layout.addWidget(self.recipes_area)
 
@@ -63,22 +72,41 @@ class MainWindow(QMainWindow):
         try:
             text = recorder.recognize_audio(file_path, self.locale)
             detected_lang = detect(text)
-            recipes = extractor.load_recipes()
-            known = extractor.known_ingredients_set(recipes)
-            ingredients = extractor.extract_ingredients(text, known)
-            matches = extractor.filter_recipes(recipes, ingredients)
+
+            self.last_recipes = extractor.load_recipes()
+            known = extractor.known_ingredients_set(self.last_recipes)
+            self.last_ingredients = extractor.extract_ingredients(text, known)
+
+            matches = extractor.filter_recipes(
+                self.last_recipes,
+                self.last_ingredients,
+                self.checkbox_strict.isChecked()
+            )
 
             self.clear_layout(self.ingredients_layout)
-            for ing in ingredients:
+            for ing in self.last_ingredients:
                 self.ingredients_layout.addWidget(self.create_ingredient_tile(ing))
 
             self.clear_layout(self.recipes_layout)
             for recipe in matches:
-                self.recipes_layout.addWidget(self.create_recipe_tile(recipe, ingredients))
-
+                self.recipes_layout.addWidget(self.create_recipe_tile(recipe, self.last_ingredients))
 
         except Exception as e:
             QMessageBox.critical(self, "Błąd", str(e))
+
+    def on_checkbox_changed(self, _):
+        if not self.last_recipes or not self.last_ingredients:
+            return
+
+        matches = extractor.filter_recipes(
+            self.last_recipes,
+            self.last_ingredients,
+            self.checkbox_strict.isChecked()
+        )
+
+        self.clear_layout(self.recipes_layout)
+        for recipe in matches:
+            self.recipes_layout.addWidget(self.create_recipe_tile(recipe, self.last_ingredients))
 
     def handle_record(self):
         from Assignment_2.audio.recorder import MicrophoneRecorderDialog
@@ -126,7 +154,6 @@ class MainWindow(QMainWindow):
         name.setStyleSheet("color: white; font-size: 15px;")
         layout.addWidget(name)
 
-
         highlighted = []
         for ing in recipe['ingredients']:
             if ing in detected_ingredients:
@@ -140,4 +167,3 @@ class MainWindow(QMainWindow):
         layout.addWidget(ingredients)
         frame.setLayout(layout)
         return frame
-
