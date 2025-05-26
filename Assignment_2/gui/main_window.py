@@ -18,6 +18,7 @@ class MainWindow(QMainWindow):
 
         self.last_ingredients = []
         self.last_recipes = []
+        self.all_words = []
 
         # Przyciski
         self.button_record = QPushButton("Nagraj z mikrofonu")
@@ -37,6 +38,14 @@ class MainWindow(QMainWindow):
         self.checkbox_strict.setChecked(False)
         self.checkbox_strict.stateChanged.connect(self.on_checkbox_changed)
 
+        #Wykryte słowa
+        self.words_label = QLabel("Wykryte słowa:")
+        self.words_area = QScrollArea()
+        self.words_container = QWidget()
+        self.words_layout = QVBoxLayout()
+        self.words_container.setLayout(self.words_layout)
+        self.words_area.setWidgetResizable(True)
+        self.words_area.setWidget(self.words_container)
         # Składniki
         self.ingredients_label = QLabel("Wykryte składniki:")
         self.ingredients_area = QScrollArea()
@@ -58,6 +67,8 @@ class MainWindow(QMainWindow):
         # Layout główny
         layout = QVBoxLayout()
         layout.addLayout(button_layout)
+        layout.addWidget(self.words_label)
+        layout.addWidget(self.words_area)
         layout.addWidget(self.ingredients_label)
         layout.addWidget(self.ingredients_area)
         layout.addWidget(self.checkbox_strict)
@@ -71,6 +82,8 @@ class MainWindow(QMainWindow):
     def process_audio_file(self, file_path):
         try:
             text = recorder.recognize_audio(file_path, self.locale)
+            print(text)
+            self.all_words = text
             detected_lang = detect(text)
 
             self.last_recipes = extractor.load_recipes()
@@ -90,7 +103,9 @@ class MainWindow(QMainWindow):
             self.clear_layout(self.recipes_layout)
             for recipe in matches:
                 self.recipes_layout.addWidget(self.create_recipe_tile(recipe, self.last_ingredients))
-
+            self.clear_layout((self.words_layout))
+            for word in self.all_words.split():
+                self.words_layout.addWidget(self.create_ingredient_tile(word))
         except Exception as e:
             QMessageBox.critical(self, "Błąd", str(e))
 
