@@ -1,7 +1,7 @@
 import numpy as np
 from PyQt6.QtGui import QGuiApplication
 from PyQt6.QtWidgets import (
-    QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QComboBox,
+    QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QComboBox,
     QFileDialog, QSpinBox, QMessageBox, QTabWidget
 )
 from PyQt6.QtCore import Qt, QRect
@@ -83,24 +83,46 @@ class MainWindow(QWidget):
         self.canvas = FigureCanvas(self.figure)
         self.train_layout.addWidget(self.canvas)
 
-        # Prediction UI
+        # Prediction UI container
+        container = QWidget()
+        container.setMaximumWidth(500)
+        container_layout = QVBoxLayout(container)
+
+        # Image selection row
         self.img_label = QLabel("Upload Image:")
         self.img_path_input = QLineEdit()
         self.browse_img_button = QPushButton("Browse Image")
         self.browse_img_button.clicked.connect(self.browse_image)
-        self.predict_layout.addWidget(self.img_label)
-        self.predict_layout.addWidget(self.img_path_input)
-        self.predict_layout.addWidget(self.browse_img_button)
+        self.browse_img_button.setMaximumWidth(100)
+        img_hbox = QHBoxLayout()
+        img_hbox.addWidget(self.img_label)
+        img_hbox.addWidget(self.img_path_input)
+        img_hbox.addWidget(self.browse_img_button)
+        container_layout.addLayout(img_hbox)
 
+        # Model selection row
         self.predict_model_label = QLabel("Model:")
         self.predict_model_combo = QComboBox()
         self.predict_model_combo.addItems(["ResNet50", "VGG16", "EfficientNetB0"])
-        self.predict_layout.addWidget(self.predict_model_label)
-        self.predict_layout.addWidget(self.predict_model_combo)
+        self.predict_model_combo.setMaximumWidth(200)
+        model_hbox = QHBoxLayout()
+        model_hbox.addWidget(self.predict_model_label)
+        model_hbox.addWidget(self.predict_model_combo)
+        container_layout.addLayout(model_hbox)
 
+        # Button row
         self.predict_button = QPushButton("Predict")
         self.predict_button.clicked.connect(self.run_prediction)
-        self.predict_layout.addWidget(self.predict_button)
+        btn_hbox = QHBoxLayout()
+        btn_hbox.addStretch()
+        btn_hbox.addWidget(self.predict_button)
+        btn_hbox.addStretch()
+        container_layout.addLayout(btn_hbox)
+
+        # Center container in the tab
+        self.predict_layout.addStretch()
+        self.predict_layout.addWidget(container, alignment=Qt.AlignmentFlag.AlignHCenter)
+        self.predict_layout.addStretch()
 
     def browse_folder(self):
         folder = QFileDialog.getExistingDirectory(self, "Select Dataset Folder")
