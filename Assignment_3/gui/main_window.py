@@ -72,13 +72,6 @@ class MainWindow(QWidget):
         model = model_loader.get_model(model_name)
         model.fit(train_gen, validation_data=val_gen, epochs=epochs)
 
-        acc = model.evaluate(val_gen, verbose=0)[1]
-        QMessageBox.warning(self, "Results", f"Accuracy: {acc:.2%}")
-
         self.figure.clear()
-        ax = self.figure.add_subplot(111)
-        ax.plot(model.history.history['accuracy'], label='Train Accuracy')
-        ax.plot(model.history.history['val_accuracy'], label='Validation Accuracy')
-        ax.legend()
-        ax.set_title("Accuracy vs Epochs")
+        evaluate_model(model, val_gen, figure=self.figure)
         self.canvas.draw()
