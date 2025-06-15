@@ -7,10 +7,12 @@ def evaluate_model(model, val_gen, figure=None):
     y_pred_probs = model.predict(val_gen)
     y_pred = (y_pred_probs > 0.5).astype(int)
 
-    print(classification_report(y_true, y_pred, target_names=val_gen.class_indices.keys()))
+    report_text = classification_report(y_true, y_pred, target_names=val_gen.class_indices.keys(), output_dict=True)
 
     plot_confusion_matrix(y_true, y_pred, val_gen.class_indices, figure=figure)
     plot_roc_curve(y_true, y_pred_probs, figure=figure)
+
+    return report_text
 
 def plot_confusion_matrix(y_true, y_pred, labels_dict, figure=None):
     fig = figure if figure is not None else plt.figure()

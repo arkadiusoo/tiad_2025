@@ -1,3 +1,4 @@
+import numpy as np
 from PyQt6.QtWidgets import (
     QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QComboBox,
     QFileDialog, QSpinBox, QMessageBox
@@ -74,5 +75,22 @@ class MainWindow(QWidget):
         model.fit(train_gen, validation_data=val_gen, epochs=epochs)
 
         self.figure.clear()
-        evaluate_model(model, val_gen, figure=self.figure)
+        report_text = evaluate_model(model, val_gen, figure=self.figure)
+        print(report_text)
         self.canvas.draw()
+        formatted_report = (
+            f"Cats:\n"
+            f"  Precision: {report_text['cats']['precision']:.2f}\n"
+            f"  Recall:    {report_text['cats']['recall']:.2f}\n"
+            f"  F1-score:  {report_text['cats']['f1-score']:.2f}\n\n"
+            f"Dogs:\n"
+            f"  Precision: {report_text['dogs']['precision']:.2f}\n"
+            f"  Recall:    {report_text['dogs']['recall']:.2f}\n"
+            f"  F1-score:  {report_text['dogs']['f1-score']:.2f}\n\n"
+            f"Accuracy:     {report_text['accuracy']:.2f}\n\n"
+            f"Weighted Avg:\n"
+            f"  Precision: {report_text['weighted avg']['precision']:.2f}\n"
+            f"  Recall:    {report_text['weighted avg']['recall']:.2f}\n"
+            f"  F1-score:  {report_text['weighted avg']['f1-score']:.2f}"
+        )
+        QMessageBox.information(self, "Classification Report", formatted_report)
