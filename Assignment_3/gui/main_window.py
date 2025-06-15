@@ -70,6 +70,7 @@ class MainWindow(QWidget):
 
         train_gen, val_gen = data_loader.get_data_generators(dataset_path, split_ratio=split)
         model = model_loader.get_model(model_name)
+        QMessageBox.warning(self, "Alert", "Model is being trained, please wait...")
         model.fit(train_gen, validation_data=val_gen, epochs=epochs)
 
         self.figure.clear()
