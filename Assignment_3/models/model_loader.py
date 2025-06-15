@@ -10,11 +10,11 @@ from tensorflow.keras.applications import EfficientNetB0
 
 def get_model(name):
     if name == "ResNet50":
-        return resnet50.build_resnet()
+        return build_resnet()
     elif name == "VGG16":
-        return vgg16.build_vgg()
+        return build_vgg()
     elif name == "EfficientNetB0":
-        return efficientnetb0.build_efficientnet()
+        return build_efficientnet()
     else:
         raise ValueError(f"Unknown model: {name}")
 

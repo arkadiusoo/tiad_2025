@@ -2,11 +2,14 @@ import argparse
 from utils import data_loader
 from models import model_loader
 from utils.metrics import evaluate_model
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="keras.src.trainers.data_adapters.py_dataset_adapter")
 
 def main():
     print("🐶🐱 Dogs vs Cats Classifier\n")
 
-    model_name = input("🔧 Wybierz model (ResNet50, VGG16, EfficientNetB0): ").strip()
+    model_name = input("🔧 Wybierz model (ResNet50, VGG16, EfficientNetB0) [domyślnie ResNet50]"
+                       ": ").strip() or "ResNet50"
     while model_name not in ['ResNet50', 'VGG16', 'EfficientNetB0']:
         model_name = input("❗ Niepoprawny model. Wybierz ponownie: ").strip()
 
@@ -15,8 +18,8 @@ def main():
         split = input("❗ Niepoprawny podział. Wybierz ponownie: ").strip()
     split = float(split)
 
-    dataset_path = input("📁 Ścieżka do zbioru danych [domyślnie data/dataset/training_set]: ").strip() or "data/dataset/training_set"
-    epochs = input("🔁 Liczba epok [domyślnie 5]: ").strip() or "5"
+    dataset_path = input("📁 Ścieżka do zbioru danych [domyślnie data/dataset/training_set]: ").strip() or "Assignment_3/data/dataset/training_set"
+    epochs = input("🔁 Liczba epok [domyślnie 1]: ").strip() or "1"
     epochs = int(epochs)
 
     # 🐾 Wczytywanie danych
