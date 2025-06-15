@@ -1,6 +1,6 @@
-import resnet50
-import vgg16
-import efficientnetb0
+# import resnet50
+# import vgg16
+# import efficientnetb0
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense
