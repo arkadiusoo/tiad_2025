@@ -1,0 +1,2077 @@
+[
+  {
+    "name": "Kanapka z serem",
+    "ingredients": [
+      "chleb",
+      "ser",
+      "masło"
+    ],
+    "ingredients_en": [
+      "bread",
+      "cheese",
+      "butter"
+    ]
+  },
+  {
+    "name": "Jajecznica",
+    "ingredients": [
+      "jajka",
+      "masło",
+      "szczypiorek"
+    ],
+    "ingredients_en": [
+      "eggs",
+      "butter",
+      "chives"
+    ]
+  },
+  {
+    "name": "Sałatka grecka",
+    "ingredients": [
+      "pomidor",
+      "ogórek",
+      "feta",
+      "oliwki",
+      "cebula",
+      "oliwa"
+    ],
+    "ingredients_en": [
+      "tomato",
+      "cucumber",
+      "feta",
+      "olives",
+      "onion",
+      "oil"
+    ]
+  },
+  {
+    "name": "Spaghetti bolognese",
+    "ingredients": [
+      "makaron",
+      "mięso mielone",
+      "cebula",
+      "czosnek",
+      "pomidory",
+      "oliwa"
+    ],
+    "ingredients_en": [
+      "pasta",
+      "minced meat",
+      "onion",
+      "garlic",
+      "tomatoes",
+      "oil"
+    ]
+  },
+  {
+    "name": "Zupa pomidorowa",
+    "ingredients": [
+      "pomidory",
+      "marchew",
+      "seler",
+      "cebula",
+      "śmietana",
+      "makaron"
+    ],
+    "ingredients_en": [
+      "tomatoes",
+      "carrot",
+      "celery",
+      "onion",
+      "cream",
+      "pasta"
+    ]
+  },
+  {
+    "name": "Placki ziemniaczane",
+    "ingredients": [
+      "ziemniaki",
+      "jajka",
+      "mąka",
+      "cebula",
+      "olej"
+    ],
+    "ingredients_en": [
+      "potatoes",
+      "eggs",
+      "flour",
+      "onion",
+      "oil"
+    ]
+  },
+  {
+    "name": "Tosty z szynką i serem",
+    "ingredients": [
+      "chleb tostowy",
+      "szynka",
+      "ser",
+      "masło"
+    ],
+    "ingredients_en": [
+      "toasted bread",
+      "ham",
+      "cheese",
+      "butter"
+    ]
+  },
+  {
+    "name": "Omlet z warzywami",
+    "ingredients": [
+      "jajka",
+      "papryka",
+      "cebula",
+      "szpinak",
+      "ser"
+    ],
+    "ingredients_en": [
+      "eggs",
+      "pepper",
+      "onion",
+      "spinach",
+      "cheese"
+    ]
+  },
+  {
+    "name": "Pizza margherita",
+    "ingredients": [
+      "ciasto",
+      "sos pomidorowy",
+      "ser mozzarella",
+      "bazylia",
+      "oliwa"
+    ],
+    "ingredients_en": [
+      "cake",
+      "tomato sauce",
+      "Mozzarella",
+      "basil",
+      "oil"
+    ]
+  },
+  {
+    "name": "Kurczak curry",
+    "ingredients": [
+      "kurczak",
+      "cebula",
+      "czosnek",
+      "mleko kokosowe",
+      "przyprawa curry",
+      "ryż"
+    ],
+    "ingredients_en": [
+      "chicken",
+      "onion",
+      "garlic",
+      "coconut milk",
+      "Curry spice",
+      "rice"
+    ]
+  },
+  {
+    "name": "Naleśniki",
+    "ingredients": [
+      "mąka",
+      "jajka",
+      "mleko",
+      "woda",
+      "olej",
+      "cukier"
+    ],
+    "ingredients_en": [
+      "flour",
+      "eggs",
+      "milk",
+      "water",
+      "oil",
+      "sugar"
+    ]
+  },
+  {
+    "name": "Zupa krem z dyni",
+    "ingredients": [
+      "dynia",
+      "cebula",
+      "czosnek",
+      "bulion",
+      "śmietana",
+      "imbir"
+    ],
+    "ingredients_en": [
+      "pumpkin",
+      "onion",
+      "garlic",
+      "broth",
+      "cream",
+      "ginger"
+    ]
+  },
+  {
+    "name": "Kopytka",
+    "ingredients": [
+      "ziemniaki",
+      "mąka",
+      "jajka",
+      "sól"
+    ],
+    "ingredients_en": [
+      "potatoes",
+      "flour",
+      "eggs",
+      "salt"
+    ]
+  },
+  {
+    "name": "Łosoś pieczony",
+    "ingredients": [
+      "łosoś",
+      "cytryna",
+      "czosnek",
+      "masło",
+      "koperek"
+    ],
+    "ingredients_en": [
+      "salmon",
+      "lemon",
+      "garlic",
+      "butter",
+      "dill"
+    ]
+  },
+  {
+    "name": "Bigos",
+    "ingredients": [
+      "kapusta kiszona",
+      "kapusta biała",
+      "mięso",
+      "cebula",
+      "śliwki suszone",
+      "liść laurowy"
+    ],
+    "ingredients_en": [
+      "sauerkraut",
+      "white cabbage",
+      "meat",
+      "onion",
+      "dried plums",
+      "bay leaf"
+    ]
+  },
+  {
+    "name": "Zwłaszcza uciekać uniwersytet",
+    "ingredients": [
+      "liść laurowy",
+      "marchew",
+      "mąka",
+      "kakao",
+      "ogórek"
+    ],
+    "ingredients_en": [
+      "bay leaf",
+      "carrot",
+      "flour",
+      "cocoa",
+      "cucumber"
+    ]
+  },
+  {
+    "name": "Filozofia czwarty",
+    "ingredients": [
+      "marchew",
+      "ryż",
+      "papryka",
+      "mleko kokosowe",
+      "dżem"
+    ],
+    "ingredients_en": [
+      "carrot",
+      "rice",
+      "pepper",
+      "coconut milk",
+      "jam"
+    ]
+  },
+  {
+    "name": "Położenie staw światło",
+    "ingredients": [
+      "mięso mielone",
+      "oliwa",
+      "sos pomidorowy",
+      "kurczak",
+      "łosoś",
+      "cukier",
+      "liść laurowy"
+    ],
+    "ingredients_en": [
+      "minced meat",
+      "oil",
+      "tomato sauce",
+      "chicken",
+      "salmon",
+      "sugar",
+      "bay leaf"
+    ]
+  },
+  {
+    "name": "Żart niebieski",
+    "ingredients": [
+      "czosnek",
+      "szpinak",
+      "dżem",
+      "masło",
+      "papryka",
+      "sos pomidorowy",
+      "sól"
+    ],
+    "ingredients_en": [
+      "garlic",
+      "spinach",
+      "jam",
+      "butter",
+      "pepper",
+      "tomato sauce",
+      "salt"
+    ]
+  },
+  {
+    "name": "Stanowić bezpośrednio",
+    "ingredients": [
+      "oliwki",
+      "sos pomidorowy",
+      "papryka",
+      "dynia",
+      "kapusta biała"
+    ],
+    "ingredients_en": [
+      "olives",
+      "tomato sauce",
+      "pepper",
+      "pumpkin",
+      "white cabbage"
+    ]
+  },
+  {
+    "name": "Określony motyl rozwiązanie",
+    "ingredients": [
+      "pomidor",
+      "pieprz",
+      "cukier",
+      "miód"
+    ],
+    "ingredients_en": [
+      "tomato",
+      "pepper",
+      "sugar",
+      "honey"
+    ]
+  },
+  {
+    "name": "Miejski las",
+    "ingredients": [
+      "chleb",
+      "pieprz",
+      "ryż",
+      "ser",
+      "truskawki",
+      "pomidor"
+    ],
+    "ingredients_en": [
+      "bread",
+      "pepper",
+      "rice",
+      "cheese",
+      "strawberries",
+      "tomato"
+    ]
+  },
+  {
+    "name": "Lekarz służba szacunek",
+    "ingredients": [
+      "bazylia",
+      "kapusta biała",
+      "szpinak",
+      "chleb"
+    ],
+    "ingredients_en": [
+      "basil",
+      "white cabbage",
+      "spinach",
+      "bread"
+    ]
+  },
+  {
+    "name": "Archipelag budynek",
+    "ingredients": [
+      "migdały",
+      "makaron",
+      "rodzynki",
+      "chleb tostowy",
+      "czosnek",
+      "marchew",
+      "pomidor"
+    ],
+    "ingredients_en": [
+      "almonds",
+      "pasta",
+      "raisins",
+      "toasted bread",
+      "garlic",
+      "carrot",
+      "tomato"
+    ]
+  },
+  {
+    "name": "Grać grunt",
+    "ingredients": [
+      "sól",
+      "szpinak",
+      "szczypiorek",
+      "cukier"
+    ],
+    "ingredients_en": [
+      "salt",
+      "spinach",
+      "chives",
+      "sugar"
+    ]
+  },
+  {
+    "name": "Wymagać godzina znany",
+    "ingredients": [
+      "dżem",
+      "koperek",
+      "kurczak",
+      "pomidory",
+      "szczypiorek"
+    ],
+    "ingredients_en": [
+      "jam",
+      "dill",
+      "chicken",
+      "tomatoes",
+      "chives"
+    ]
+  },
+  {
+    "name": "Południowy żelazo produkcja",
+    "ingredients": [
+      "ananas",
+      "oliwa",
+      "rodzynki",
+      "czosnek"
+    ],
+    "ingredients_en": [
+      "pineapple",
+      "oil",
+      "raisins",
+      "garlic"
+    ]
+  },
+  {
+    "name": "Cisza sobą",
+    "ingredients": [
+      "masło orzechowe",
+      "mleko kokosowe",
+      "pieprz",
+      "ogórek"
+    ],
+    "ingredients_en": [
+      "peanut butter",
+      "coconut milk",
+      "pepper",
+      "cucumber"
+    ]
+  },
+  {
+    "name": "Lotniczy wyspa",
+    "ingredients": [
+      "seler",
+      "kakao",
+      "śledzie",
+      "feta",
+      "migdały",
+      "kapusta biała",
+      "serek mascarpone"
+    ],
+    "ingredients_en": [
+      "celery",
+      "cocoa",
+      "herring",
+      "feta",
+      "almonds",
+      "white cabbage",
+      "mascarpone cheese"
+    ]
+  },
+  {
+    "name": "Czerwiec miły utrzymywać cyfra",
+    "ingredients": [
+      "tuńczyk",
+      "sól",
+      "serek mascarpone",
+      "śledzie",
+      "makaron",
+      "kurczak",
+      "mąka"
+    ],
+    "ingredients_en": [
+      "tuna",
+      "salt",
+      "mascarpone cheese",
+      "herring",
+      "pasta",
+      "chicken",
+      "flour"
+    ]
+  },
+  {
+    "name": "Klasa używać przyszły",
+    "ingredients": [
+      "banan",
+      "kapusta kiszona",
+      "bulion",
+      "bita śmietana",
+      "dynia",
+      "pieprz"
+    ],
+    "ingredients_en": [
+      "banana",
+      "sauerkraut",
+      "broth",
+      "whipped cream",
+      "pumpkin",
+      "pepper"
+    ]
+  },
+  {
+    "name": "Na Pewno",
+    "ingredients": [
+      "masło",
+      "żurawina",
+      "kurczak",
+      "ziemniaki",
+      "cebula",
+      "seler",
+      "ciasto"
+    ],
+    "ingredients_en": [
+      "butter",
+      "cranberries",
+      "chicken",
+      "potatoes",
+      "onion",
+      "celery",
+      "cake"
+    ]
+  },
+  {
+    "name": "Przeciw pas",
+    "ingredients": [
+      "cytryna",
+      "ciasto",
+      "seler",
+      "kakao",
+      "miód",
+      "masło",
+      "chleb"
+    ],
+    "ingredients_en": [
+      "lemon",
+      "cake",
+      "celery",
+      "cocoa",
+      "honey",
+      "butter",
+      "bread"
+    ]
+  },
+  {
+    "name": "Możliwy procent krok",
+    "ingredients": [
+      "śmietana",
+      "sos pomidorowy",
+      "liść laurowy",
+      "papryka",
+      "mięso mielone"
+    ],
+    "ingredients_en": [
+      "cream",
+      "tomato sauce",
+      "bay leaf",
+      "pepper",
+      "minced meat"
+    ]
+  },
+  {
+    "name": "Osoba głupiec",
+    "ingredients": [
+      "przyprawa curry",
+      "bita śmietana",
+      "tuńczyk",
+      "sól",
+      "oliwa",
+      "pieprz"
+    ],
+    "ingredients_en": [
+      "Curry spice",
+      "whipped cream",
+      "tuna",
+      "salt",
+      "oil",
+      "pepper"
+    ]
+  },
+  {
+    "name": "Islam hotel",
+    "ingredients": [
+      "rodzynki",
+      "kapusta biała",
+      "cytryna",
+      "oliwki"
+    ],
+    "ingredients_en": [
+      "raisins",
+      "white cabbage",
+      "lemon",
+      "olives"
+    ]
+  },
+  {
+    "name": "Wywołać 4 techniczny",
+    "ingredients": [
+      "makaron",
+      "cukier",
+      "przyprawa curry",
+      "chleb",
+      "bazylia",
+      "kakao",
+      "brokuły"
+    ],
+    "ingredients_en": [
+      "pasta",
+      "sugar",
+      "Curry spice",
+      "bread",
+      "basil",
+      "cocoa",
+      "broccoli"
+    ]
+  },
+  {
+    "name": "Obok ich",
+    "ingredients": [
+      "olej",
+      "sól",
+      "kapusta biała",
+      "ananas",
+      "kakao"
+    ],
+    "ingredients_en": [
+      "oil",
+      "salt",
+      "white cabbage",
+      "pineapple",
+      "cocoa"
+    ]
+  },
+  {
+    "name": "Fakt strata przeprowadzać",
+    "ingredients": [
+      "sól",
+      "feta",
+      "mąka",
+      "woda",
+      "marchew",
+      "pomidor",
+      "dynia"
+    ],
+    "ingredients_en": [
+      "salt",
+      "feta",
+      "flour",
+      "water",
+      "carrot",
+      "tomato",
+      "pumpkin"
+    ]
+  },
+  {
+    "name": "Osobisty brzeg dzieło",
+    "ingredients": [
+      "przyprawa curry",
+      "mleko",
+      "ser mozzarella",
+      "kakao",
+      "makaron",
+      "truskawki"
+    ],
+    "ingredients_en": [
+      "Curry spice",
+      "milk",
+      "Mozzarella",
+      "cocoa",
+      "pasta",
+      "strawberries"
+    ]
+  },
+  {
+    "name": "Stworzyć gwałtowny postawić",
+    "ingredients": [
+      "ser mozzarella",
+      "płatki owsiane",
+      "seler",
+      "przyprawa curry",
+      "ser",
+      "kakao",
+      "pomidory"
+    ],
+    "ingredients_en": [
+      "Mozzarella",
+      "oat flakes",
+      "celery",
+      "Curry spice",
+      "cheese",
+      "cocoa",
+      "tomatoes"
+    ]
+  },
+  {
+    "name": "Wczoraj wynikać klasztor",
+    "ingredients": [
+      "marchew",
+      "bulion",
+      "żurawina",
+      "ciasto"
+    ],
+    "ingredients_en": [
+      "carrot",
+      "broth",
+      "cranberries",
+      "cake"
+    ]
+  },
+  {
+    "name": "Bo podróż",
+    "ingredients": [
+      "ananas",
+      "ogórek",
+      "tuńczyk",
+      "szczypiorek",
+      "marchew",
+      "mięso mielone",
+      "ser mozzarella"
+    ],
+    "ingredients_en": [
+      "pineapple",
+      "cucumber",
+      "tuna",
+      "chives",
+      "carrot",
+      "minced meat",
+      "Mozzarella"
+    ]
+  },
+  {
+    "name": "Ciężki jądro napój",
+    "ingredients": [
+      "liść laurowy",
+      "imbir",
+      "kurczak",
+      "cebula",
+      "koperek",
+      "truskawki",
+      "migdały"
+    ],
+    "ingredients_en": [
+      "bay leaf",
+      "ginger",
+      "chicken",
+      "onion",
+      "dill",
+      "strawberries",
+      "almonds"
+    ]
+  },
+  {
+    "name": "Zajęcie obchodzić ząb",
+    "ingredients": [
+      "dynia",
+      "masło",
+      "czekolada",
+      "cebula"
+    ],
+    "ingredients_en": [
+      "pumpkin",
+      "butter",
+      "chocolate",
+      "onion"
+    ]
+  },
+  {
+    "name": "Fakt tłuszcz dar zeszły",
+    "ingredients": [
+      "pieprz",
+      "szczypiorek",
+      "śledzie",
+      "bazylia",
+      "czekolada",
+      "miód",
+      "dżem"
+    ],
+    "ingredients_en": [
+      "pepper",
+      "chives",
+      "herring",
+      "basil",
+      "chocolate",
+      "honey",
+      "jam"
+    ]
+  },
+  {
+    "name": "Lustro odcień wierzyć z powodu",
+    "ingredients": [
+      "feta",
+      "szczypiorek",
+      "serek mascarpone",
+      "woda"
+    ],
+    "ingredients_en": [
+      "feta",
+      "chives",
+      "mascarpone cheese",
+      "water"
+    ]
+  },
+  {
+    "name": "Ile przygotowywać",
+    "ingredients": [
+      "koperek",
+      "chleb tostowy",
+      "makaron",
+      "banan",
+      "cebula"
+    ],
+    "ingredients_en": [
+      "dill",
+      "toasted bread",
+      "pasta",
+      "banana",
+      "onion"
+    ]
+  },
+  {
+    "name": "Teraz zakładać",
+    "ingredients": [
+      "żurawina",
+      "grzyby",
+      "kapusta kiszona",
+      "masło orzechowe"
+    ],
+    "ingredients_en": [
+      "cranberries",
+      "mushrooms",
+      "sauerkraut",
+      "peanut butter"
+    ]
+  },
+  {
+    "name": "Wysyłać wciąż port",
+    "ingredients": [
+      "cebula",
+      "migdały",
+      "imbir",
+      "maliny",
+      "orzechy",
+      "serek wiejski",
+      "szpinak"
+    ],
+    "ingredients_en": [
+      "onion",
+      "almonds",
+      "ginger",
+      "raspberries",
+      "nuts",
+      "rural cheese",
+      "spinach"
+    ]
+  },
+  {
+    "name": "Pomysł 5",
+    "ingredients": [
+      "migdały",
+      "kapusta kiszona",
+      "cukier",
+      "chleb tostowy",
+      "woda",
+      "marchew"
+    ],
+    "ingredients_en": [
+      "almonds",
+      "sauerkraut",
+      "sugar",
+      "toasted bread",
+      "water",
+      "carrot"
+    ]
+  },
+  {
+    "name": "Bez",
+    "ingredients": [
+      "grzyby",
+      "kurczak",
+      "ciasto",
+      "makaron",
+      "sól"
+    ],
+    "ingredients_en": [
+      "mushrooms",
+      "chicken",
+      "cake",
+      "pasta",
+      "salt"
+    ]
+  },
+  {
+    "name": "Marka zamykać rzecz",
+    "ingredients": [
+      "ananas",
+      "ogórek",
+      "czekolada",
+      "oliwa",
+      "ciasto",
+      "orzechy"
+    ],
+    "ingredients_en": [
+      "pineapple",
+      "cucumber",
+      "chocolate",
+      "oil",
+      "cake",
+      "nuts"
+    ]
+  },
+  {
+    "name": "Stać niedźwiedź herb jedynie",
+    "ingredients": [
+      "koperek",
+      "śliwki suszone",
+      "szczypiorek",
+      "borówki",
+      "tuńczyk"
+    ],
+    "ingredients_en": [
+      "dill",
+      "dried plums",
+      "chives",
+      "blueberry",
+      "tuna"
+    ]
+  },
+  {
+    "name": "Polski wilk szkodliwy",
+    "ingredients": [
+      "masło orzechowe",
+      "kakao",
+      "ogórek",
+      "masło",
+      "dynia",
+      "tuńczyk"
+    ],
+    "ingredients_en": [
+      "peanut butter",
+      "cocoa",
+      "cucumber",
+      "butter",
+      "pumpkin",
+      "tuna"
+    ]
+  },
+  {
+    "name": "Przyprawa atak tarcza",
+    "ingredients": [
+      "dynia",
+      "serek mascarpone",
+      "miód",
+      "pomidor",
+      "kurczak"
+    ],
+    "ingredients_en": [
+      "pumpkin",
+      "mascarpone cheese",
+      "honey",
+      "tomato",
+      "chicken"
+    ]
+  },
+  {
+    "name": "Równy pieśń",
+    "ingredients": [
+      "bita śmietana",
+      "truskawki",
+      "ser mozzarella",
+      "łosoś"
+    ],
+    "ingredients_en": [
+      "whipped cream",
+      "strawberries",
+      "Mozzarella",
+      "salmon"
+    ]
+  },
+  {
+    "name": "Gwiazdozbiór pół",
+    "ingredients": [
+      "maliny",
+      "ciasto",
+      "marchew",
+      "ser",
+      "kapusta biała"
+    ],
+    "ingredients_en": [
+      "raspberries",
+      "cake",
+      "carrot",
+      "cheese",
+      "white cabbage"
+    ]
+  },
+  {
+    "name": "Dziecko przypadek",
+    "ingredients": [
+      "koperek",
+      "migdały",
+      "mięso mielone",
+      "brokuły",
+      "ser",
+      "makaron",
+      "masło"
+    ],
+    "ingredients_en": [
+      "dill",
+      "almonds",
+      "minced meat",
+      "broccoli",
+      "cheese",
+      "pasta",
+      "butter"
+    ]
+  },
+  {
+    "name": "Zawodnik święty",
+    "ingredients": [
+      "oliwa",
+      "serek wiejski",
+      "mąka",
+      "szczypiorek",
+      "kakao"
+    ],
+    "ingredients_en": [
+      "oil",
+      "rural cheese",
+      "flour",
+      "chives",
+      "cocoa"
+    ]
+  },
+  {
+    "name": "Postawa dodatek dźwięk",
+    "ingredients": [
+      "chleb tostowy",
+      "mięso mielone",
+      "ser mozzarella",
+      "migdały",
+      "ser"
+    ],
+    "ingredients_en": [
+      "toasted bread",
+      "minced meat",
+      "Mozzarella",
+      "almonds",
+      "cheese"
+    ]
+  },
+  {
+    "name": "Czas szkoła",
+    "ingredients": [
+      "dynia",
+      "grzyby",
+      "koperek",
+      "mleko"
+    ],
+    "ingredients_en": [
+      "pumpkin",
+      "mushrooms",
+      "dill",
+      "milk"
+    ]
+  },
+  {
+    "name": "Jedzenie młody",
+    "ingredients": [
+      "pomidory",
+      "ananas",
+      "śliwki suszone",
+      "feta"
+    ],
+    "ingredients_en": [
+      "tomatoes",
+      "pineapple",
+      "dried plums",
+      "feta"
+    ]
+  },
+  {
+    "name": "Nowy czysty",
+    "ingredients": [
+      "sos pomidorowy",
+      "jajka",
+      "liść laurowy",
+      "chleb tostowy",
+      "ananas"
+    ],
+    "ingredients_en": [
+      "tomato sauce",
+      "eggs",
+      "bay leaf",
+      "toasted bread",
+      "pineapple"
+    ]
+  },
+  {
+    "name": "Oznaczać Morze Śródziemne",
+    "ingredients": [
+      "ananas",
+      "kurczak",
+      "pomidory",
+      "olej",
+      "grzyby",
+      "cukier puder"
+    ],
+    "ingredients_en": [
+      "pineapple",
+      "chicken",
+      "tomatoes",
+      "oil",
+      "mushrooms",
+      "icing sugar"
+    ]
+  },
+  {
+    "name": "Służba brudny",
+    "ingredients": [
+      "ogórek",
+      "płatki owsiane",
+      "bazylia",
+      "pomidor",
+      "oliwki",
+      "masło orzechowe",
+      "woda"
+    ],
+    "ingredients_en": [
+      "cucumber",
+      "oat flakes",
+      "basil",
+      "tomato",
+      "olives",
+      "peanut butter",
+      "water"
+    ]
+  },
+  {
+    "name": "Francja strefa stopień",
+    "ingredients": [
+      "kurczak",
+      "tuńczyk",
+      "ziemniaki",
+      "czekolada"
+    ],
+    "ingredients_en": [
+      "chicken",
+      "tuna",
+      "potatoes",
+      "chocolate"
+    ]
+  },
+  {
+    "name": "Miara choroba",
+    "ingredients": [
+      "oliwki",
+      "jajka",
+      "borówki",
+      "serek mascarpone"
+    ],
+    "ingredients_en": [
+      "olives",
+      "eggs",
+      "blueberry",
+      "mascarpone cheese"
+    ]
+  },
+  {
+    "name": "Usta obcy przód",
+    "ingredients": [
+      "bazylia",
+      "łosoś",
+      "banan",
+      "szpinak",
+      "szczypiorek"
+    ],
+    "ingredients_en": [
+      "basil",
+      "salmon",
+      "banana",
+      "spinach",
+      "chives"
+    ]
+  },
+  {
+    "name": "Graniczyć różny",
+    "ingredients": [
+      "orzechy",
+      "śliwki suszone",
+      "śmietana",
+      "cukier",
+      "czosnek",
+      "olej",
+      "ser"
+    ],
+    "ingredients_en": [
+      "nuts",
+      "dried plums",
+      "cream",
+      "sugar",
+      "garlic",
+      "oil",
+      "cheese"
+    ]
+  },
+  {
+    "name": "Położyć",
+    "ingredients": [
+      "koperek",
+      "pomidory",
+      "sos pomidorowy",
+      "szczypiorek"
+    ],
+    "ingredients_en": [
+      "dill",
+      "tomatoes",
+      "tomato sauce",
+      "chives"
+    ]
+  },
+  {
+    "name": "Sportowy następny",
+    "ingredients": [
+      "banan",
+      "ziemniaki",
+      "kapusta biała",
+      "płatki owsiane",
+      "kakao"
+    ],
+    "ingredients_en": [
+      "banana",
+      "potatoes",
+      "white cabbage",
+      "oat flakes",
+      "cocoa"
+    ]
+  },
+  {
+    "name": "Zaufanie aż",
+    "ingredients": [
+      "jajka",
+      "chleb",
+      "brokuły",
+      "oliwki",
+      "woda",
+      "makaron"
+    ],
+    "ingredients_en": [
+      "eggs",
+      "bread",
+      "broccoli",
+      "olives",
+      "water",
+      "pasta"
+    ]
+  },
+  {
+    "name": "Własny korzeń",
+    "ingredients": [
+      "pomidory",
+      "ziemniaki",
+      "woda",
+      "czekolada",
+      "kurczak",
+      "ser mozzarella"
+    ],
+    "ingredients_en": [
+      "tomatoes",
+      "potatoes",
+      "water",
+      "chocolate",
+      "chicken",
+      "Mozzarella"
+    ]
+  },
+  {
+    "name": "Odmiana ciało",
+    "ingredients": [
+      "szynka",
+      "bazylia",
+      "kurczak",
+      "borówki",
+      "migdały",
+      "cebula",
+      "masło"
+    ],
+    "ingredients_en": [
+      "ham",
+      "basil",
+      "chicken",
+      "blueberry",
+      "almonds",
+      "onion",
+      "butter"
+    ]
+  },
+  {
+    "name": "Kaczka zbudować",
+    "ingredients": [
+      "tuńczyk",
+      "szpinak",
+      "żurawina",
+      "masło orzechowe",
+      "grzyby",
+      "kapusta biała",
+      "bazylia"
+    ],
+    "ingredients_en": [
+      "tuna",
+      "spinach",
+      "cranberries",
+      "peanut butter",
+      "mushrooms",
+      "white cabbage",
+      "basil"
+    ]
+  },
+  {
+    "name": "Wydawać Się epoka",
+    "ingredients": [
+      "ciasto",
+      "chleb",
+      "bita śmietana",
+      "mąka"
+    ],
+    "ingredients_en": [
+      "cake",
+      "bread",
+      "whipped cream",
+      "flour"
+    ]
+  },
+  {
+    "name": "Metr wisieć zawartość",
+    "ingredients": [
+      "oliwa",
+      "mięso mielone",
+      "liść laurowy",
+      "pomidory"
+    ],
+    "ingredients_en": [
+      "oil",
+      "minced meat",
+      "bay leaf",
+      "tomatoes"
+    ]
+  },
+  {
+    "name": "Głupiec brzuch",
+    "ingredients": [
+      "mięso mielone",
+      "ziemniaki",
+      "seler",
+      "pomidor",
+      "ser mozzarella",
+      "woda"
+    ],
+    "ingredients_en": [
+      "minced meat",
+      "potatoes",
+      "celery",
+      "tomato",
+      "Mozzarella",
+      "water"
+    ]
+  },
+  {
+    "name": "Gołąb codzienny",
+    "ingredients": [
+      "pomidory",
+      "przyprawa curry",
+      "migdały",
+      "bita śmietana",
+      "ziemniaki",
+      "mięso mielone"
+    ],
+    "ingredients_en": [
+      "tomatoes",
+      "Curry spice",
+      "almonds",
+      "whipped cream",
+      "potatoes",
+      "minced meat"
+    ]
+  },
+  {
+    "name": "Szwedzki mieszkanka samochód",
+    "ingredients": [
+      "oliwki",
+      "miód",
+      "płatki owsiane",
+      "kapusta biała",
+      "makaron",
+      "seler"
+    ],
+    "ingredients_en": [
+      "olives",
+      "honey",
+      "oat flakes",
+      "white cabbage",
+      "pasta",
+      "celery"
+    ]
+  },
+  {
+    "name": "Pozycja następować nagle",
+    "ingredients": [
+      "przyprawa curry",
+      "imbir",
+      "mąka",
+      "ogórek",
+      "koperek"
+    ],
+    "ingredients_en": [
+      "Curry spice",
+      "ginger",
+      "flour",
+      "cucumber",
+      "dill"
+    ]
+  },
+  {
+    "name": "Potrzebować",
+    "ingredients": [
+      "banan",
+      "feta",
+      "mleko kokosowe",
+      "makaron",
+      "oliwki",
+      "chleb tostowy",
+      "mąka"
+    ],
+    "ingredients_en": [
+      "banana",
+      "feta",
+      "coconut milk",
+      "pasta",
+      "olives",
+      "toasted bread",
+      "flour"
+    ]
+  },
+  {
+    "name": "Między taki",
+    "ingredients": [
+      "borówki",
+      "pomidory",
+      "tuńczyk",
+      "imbir",
+      "jajka",
+      "dynia",
+      "dżem"
+    ],
+    "ingredients_en": [
+      "blueberry",
+      "tomatoes",
+      "tuna",
+      "ginger",
+      "eggs",
+      "pumpkin",
+      "jam"
+    ]
+  },
+  {
+    "name": "Igła dany",
+    "ingredients": [
+      "przyprawa curry",
+      "czosnek",
+      "ziemniaki",
+      "oliwa"
+    ],
+    "ingredients_en": [
+      "Curry spice",
+      "garlic",
+      "potatoes",
+      "oil"
+    ]
+  },
+  {
+    "name": "Czterdzieści iść francuski",
+    "ingredients": [
+      "ser mozzarella",
+      "bita śmietana",
+      "woda",
+      "makaron",
+      "kurczak",
+      "mleko kokosowe",
+      "kalafior"
+    ],
+    "ingredients_en": [
+      "Mozzarella",
+      "whipped cream",
+      "water",
+      "pasta",
+      "chicken",
+      "coconut milk",
+      "cauliflower"
+    ]
+  },
+  {
+    "name": "Srebro 90 matka",
+    "ingredients": [
+      "papryka",
+      "przyprawa curry",
+      "serek mascarpone",
+      "chleb tostowy",
+      "bita śmietana"
+    ],
+    "ingredients_en": [
+      "pepper",
+      "Curry spice",
+      "mascarpone cheese",
+      "toasted bread",
+      "whipped cream"
+    ]
+  },
+  {
+    "name": "Nos",
+    "ingredients": [
+      "serek mascarpone",
+      "maliny",
+      "serek wiejski",
+      "cukier puder",
+      "ciasto",
+      "oliwki",
+      "szynka"
+    ],
+    "ingredients_en": [
+      "mascarpone cheese",
+      "raspberries",
+      "rural cheese",
+      "icing sugar",
+      "cake",
+      "olives",
+      "ham"
+    ]
+  },
+  {
+    "name": "Smak śpiewać",
+    "ingredients": [
+      "banan",
+      "grzyby",
+      "ziemniaki",
+      "kakao",
+      "bita śmietana",
+      "migdały"
+    ],
+    "ingredients_en": [
+      "banana",
+      "mushrooms",
+      "potatoes",
+      "cocoa",
+      "whipped cream",
+      "almonds"
+    ]
+  },
+  {
+    "name": "Staw większy",
+    "ingredients": [
+      "borówki",
+      "kapusta biała",
+      "dżem",
+      "chleb",
+      "cytryna"
+    ],
+    "ingredients_en": [
+      "blueberry",
+      "white cabbage",
+      "jam",
+      "bread",
+      "lemon"
+    ]
+  },
+  {
+    "name": "Pisanie osobisty epoka",
+    "ingredients": [
+      "ser",
+      "czekolada",
+      "chleb",
+      "dynia",
+      "przyprawa curry",
+      "truskawki",
+      "serek mascarpone"
+    ],
+    "ingredients_en": [
+      "cheese",
+      "chocolate",
+      "bread",
+      "pumpkin",
+      "Curry spice",
+      "strawberries",
+      "mascarpone cheese"
+    ]
+  },
+  {
+    "name": "Wioska obowiązek blady budzić",
+    "ingredients": [
+      "ser mozzarella",
+      "borówki",
+      "serek wiejski",
+      "bazylia",
+      "woda"
+    ],
+    "ingredients_en": [
+      "Mozzarella",
+      "blueberry",
+      "rural cheese",
+      "basil",
+      "water"
+    ]
+  },
+  {
+    "name": "Drewniany",
+    "ingredients": [
+      "dynia",
+      "liść laurowy",
+      "imbir",
+      "sól",
+      "papryka",
+      "szynka"
+    ],
+    "ingredients_en": [
+      "pumpkin",
+      "bay leaf",
+      "ginger",
+      "salt",
+      "pepper",
+      "ham"
+    ]
+  },
+  {
+    "name": "Upadek Szwecja zamieszkiwać",
+    "ingredients": [
+      "cukier",
+      "pieprz",
+      "rodzynki",
+      "jajka",
+      "pomidory",
+      "kapusta biała",
+      "mąka"
+    ],
+    "ingredients_en": [
+      "sugar",
+      "pepper",
+      "raisins",
+      "eggs",
+      "tomatoes",
+      "white cabbage",
+      "flour"
+    ]
+  },
+  {
+    "name": "Położyć lis",
+    "ingredients": [
+      "cukier",
+      "mleko",
+      "dżem",
+      "przyprawa curry",
+      "szczypiorek",
+      "bita śmietana"
+    ],
+    "ingredients_en": [
+      "sugar",
+      "milk",
+      "jam",
+      "Curry spice",
+      "chives",
+      "whipped cream"
+    ]
+  },
+  {
+    "name": "Samochód płeć pomoc",
+    "ingredients": [
+      "śmietana",
+      "ciasto",
+      "bita śmietana",
+      "truskawki",
+      "brokuły",
+      "dżem"
+    ],
+    "ingredients_en": [
+      "cream",
+      "cake",
+      "whipped cream",
+      "strawberries",
+      "broccoli",
+      "jam"
+    ]
+  },
+  {
+    "name": "Bilet arabski biologia",
+    "ingredients": [
+      "bita śmietana",
+      "szpinak",
+      "ryż",
+      "chleb tostowy"
+    ],
+    "ingredients_en": [
+      "whipped cream",
+      "spinach",
+      "rice",
+      "toasted bread"
+    ]
+  },
+  {
+    "name": "Tablica dusza nagle",
+    "ingredients": [
+      "cukier",
+      "tuńczyk",
+      "koperek",
+      "śledzie",
+      "mleko kokosowe",
+      "ser"
+    ],
+    "ingredients_en": [
+      "sugar",
+      "tuna",
+      "dill",
+      "herring",
+      "coconut milk",
+      "cheese"
+    ]
+  },
+  {
+    "name": "Ustawa poruszać",
+    "ingredients": [
+      "ananas",
+      "cytryna",
+      "jajka",
+      "szynka",
+      "mięso mielone",
+      "kalafior"
+    ],
+    "ingredients_en": [
+      "pineapple",
+      "lemon",
+      "eggs",
+      "ham",
+      "minced meat",
+      "cauliflower"
+    ]
+  },
+  {
+    "name": "Pięćdziesiąt dyrektor włoski",
+    "ingredients": [
+      "kakao",
+      "rodzynki",
+      "masło",
+      "chleb",
+      "śledzie",
+      "woda",
+      "śliwki suszone"
+    ],
+    "ingredients_en": [
+      "cocoa",
+      "raisins",
+      "butter",
+      "bread",
+      "herring",
+      "water",
+      "dried plums"
+    ]
+  },
+  {
+    "name": "Słownik wiosna 1",
+    "ingredients": [
+      "chleb tostowy",
+      "szynka",
+      "cukier",
+      "grzyby"
+    ],
+    "ingredients_en": [
+      "toasted bread",
+      "ham",
+      "sugar",
+      "mushrooms"
+    ]
+  },
+  {
+    "name": "Spotykać zmiana warunek",
+    "ingredients": [
+      "sól",
+      "miód",
+      "orzechy",
+      "żurawina",
+      "feta"
+    ],
+    "ingredients_en": [
+      "salt",
+      "honey",
+      "nuts",
+      "cranberries",
+      "feta"
+    ]
+  },
+  {
+    "name": "Górny umierać przód",
+    "ingredients": [
+      "kakao",
+      "cebula",
+      "koperek",
+      "chleb",
+      "miód",
+      "pomidor"
+    ],
+    "ingredients_en": [
+      "cocoa",
+      "onion",
+      "dill",
+      "bread",
+      "honey",
+      "tomato"
+    ]
+  },
+  {
+    "name": "Techniczny",
+    "ingredients": [
+      "szczypiorek",
+      "bita śmietana",
+      "ryż",
+      "śledzie",
+      "czekolada",
+      "jajka"
+    ],
+    "ingredients_en": [
+      "chives",
+      "whipped cream",
+      "rice",
+      "herring",
+      "chocolate",
+      "eggs"
+    ]
+  },
+  {
+    "name": "Ochrona dział zapis",
+    "ingredients": [
+      "marchew",
+      "serek wiejski",
+      "kapusta kiszona",
+      "szynka",
+      "cukier puder",
+      "miód"
+    ],
+    "ingredients_en": [
+      "carrot",
+      "rural cheese",
+      "sauerkraut",
+      "ham",
+      "icing sugar",
+      "honey"
+    ]
+  },
+  {
+    "name": "Wraz koń",
+    "ingredients": [
+      "kurczak",
+      "bazylia",
+      "cebula",
+      "mleko kokosowe",
+      "mięso mielone"
+    ],
+    "ingredients_en": [
+      "chicken",
+      "basil",
+      "onion",
+      "coconut milk",
+      "minced meat"
+    ]
+  },
+  {
+    "name": "Sobie osiemdziesiąt",
+    "ingredients": [
+      "seler",
+      "woda",
+      "masło",
+      "mięso mielone",
+      "łosoś",
+      "cukier",
+      "ryż"
+    ],
+    "ingredients_en": [
+      "celery",
+      "water",
+      "butter",
+      "minced meat",
+      "salmon",
+      "sugar",
+      "rice"
+    ]
+  },
+  {
+    "name": "Budowa interes",
+    "ingredients": [
+      "olej",
+      "śliwki suszone",
+      "koperek",
+      "tuńczyk",
+      "przyprawa curry",
+      "cukier puder"
+    ],
+    "ingredients_en": [
+      "oil",
+      "dried plums",
+      "dill",
+      "tuna",
+      "Curry spice",
+      "icing sugar"
+    ]
+  },
+  {
+    "name": "Czyli naród",
+    "ingredients": [
+      "truskawki",
+      "szczypiorek",
+      "mleko kokosowe",
+      "kapusta kiszona",
+      "masło",
+      "kakao"
+    ],
+    "ingredients_en": [
+      "strawberries",
+      "chives",
+      "coconut milk",
+      "sauerkraut",
+      "butter",
+      "cocoa"
+    ]
+  },
+  {
+    "name": "Mieć zaufanie panować",
+    "ingredients": [
+      "papryka",
+      "rodzynki",
+      "imbir",
+      "pomidor",
+      "makaron",
+      "szpinak",
+      "tuńczyk"
+    ],
+    "ingredients_en": [
+      "pepper",
+      "raisins",
+      "ginger",
+      "tomato",
+      "pasta",
+      "spinach",
+      "tuna"
+    ]
+  },
+  {
+    "name": "Książka",
+    "ingredients": [
+      "liść laurowy",
+      "cebula",
+      "woda",
+      "bazylia"
+    ],
+    "ingredients_en": [
+      "bay leaf",
+      "onion",
+      "water",
+      "basil"
+    ]
+  },
+  {
+    "name": "Wewnętrzny tydzień",
+    "ingredients": [
+      "mleko",
+      "śledzie",
+      "chleb",
+      "marchew",
+      "borówki",
+      "serek wiejski"
+    ],
+    "ingredients_en": [
+      "milk",
+      "herring",
+      "bread",
+      "carrot",
+      "blueberry",
+      "rural cheese"
+    ]
+  },
+  {
+    "name": "We religijny ten",
+    "ingredients": [
+      "cytryna",
+      "ciasto",
+      "serek wiejski",
+      "ser"
+    ],
+    "ingredients_en": [
+      "lemon",
+      "cake",
+      "rural cheese",
+      "cheese"
+    ]
+  },
+  {
+    "name": "Szkoła zrobić padać",
+    "ingredients": [
+      "rodzynki",
+      "banan",
+      "cebula",
+      "tuńczyk",
+      "kapusta kiszona",
+      "cukier puder",
+      "ciasto"
+    ],
+    "ingredients_en": [
+      "raisins",
+      "banana",
+      "onion",
+      "tuna",
+      "sauerkraut",
+      "icing sugar",
+      "cake"
+    ]
+  },
+  {
+    "name": "Zmieniać przekazywać przedstawienie",
+    "ingredients": [
+      "ser",
+      "mąka",
+      "przyprawa curry",
+      "migdały"
+    ],
+    "ingredients_en": [
+      "cheese",
+      "flour",
+      "Curry spice",
+      "almonds"
+    ]
+  }
+]
