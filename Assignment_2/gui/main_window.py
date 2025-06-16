@@ -5,7 +5,8 @@ from PyQt6.QtWidgets import (
     QVBoxLayout, QLabel, QFileDialog, QMessageBox,
     QScrollArea, QHBoxLayout, QFrame, QSizePolicy, QCheckBox
 )
-from Assignment_2.audio import recorder
+from Assignment_2.audio import recorder, translator
+from Assignment_2.audio.translator import translate_words
 from Assignment_2.nlp import extractor
 from langdetect import detect
 
@@ -82,13 +83,22 @@ class MainWindow(QMainWindow):
     def process_audio_file(self, file_path):
         try:
             text = recorder.recognize_audio(file_path, self.locale)
-            print(text)
             self.all_words = text
+            print(self.all_words)
             detected_lang = detect(text)
+            print(detected_lang)
 
             self.last_recipes = extractor.load_recipes()
             known = extractor.known_ingredients_set(self.last_recipes)
-            self.last_ingredients = extractor.extract_ingredients(text, known)
+
+            words = text.lower().split()
+            print(words)
+            translated_words = translate_words(words, dest='en')
+            print(translated_words)
+
+
+            self.last_ingredients = [w for w in translated_words if w in known]
+            print(self.last_ingredients)
 
             matches = extractor.filter_recipes(
                 self.last_recipes,
