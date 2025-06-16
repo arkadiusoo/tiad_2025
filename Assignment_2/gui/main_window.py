@@ -170,7 +170,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(name)
 
         highlighted = []
-        for ing in recipe['ingredients']:
+        for ing in recipe['ingredients_en']:
             if ing in detected_ingredients:
                 highlighted.append(f"<span style='color: lightgreen'>{ing}</span>")
             else:
